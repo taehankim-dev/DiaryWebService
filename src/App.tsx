@@ -1,14 +1,24 @@
-import { BrowserRouter } from "react-router-dom"
-import { Routes, Route } from "react-router-dom";
+import Header from "@components/Header";
+import Menu from "@components/Menu";
+import PageRoutes from "@pages/PageRoutes";
+import styled from "@emotion/styled";
+
+const ArticleContanier = styled.div`
+  display:grid;
+  grid-template-columns : 1fr 4fr;
+`
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route></Route>
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <Header />
+      <ArticleContanier>
+        <Menu />
+        <PageRoutes />
+      </ArticleContanier>
+    </div>
+    
   )
 }
 
-export default App
+export default App;
