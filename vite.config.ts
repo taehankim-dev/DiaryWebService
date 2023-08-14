@@ -11,7 +11,8 @@ export default defineConfig({
       {find : '@components', replacement: path.resolve(__dirname, "src/components")},
       {find : '@pages', replacement: path.resolve(__dirname, "src/pages")},
       {find : '@states', replacement: path.resolve(__dirname, "src/states")},
-      {find : '@typess', replacement: path.resolve(__dirname, "src/types")},
+      {find : '@types', replacement: path.resolve(__dirname, "src/types")},
+      {find : '@styles', replacement: path.resolve(__dirname, "src/styles")},
     ]
   }
 })
