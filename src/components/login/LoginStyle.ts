@@ -84,8 +84,9 @@ export const LoginLabel = styled.label`
   font-size:1rem;
 `
 
-export const LoginButton = styled.div`
+export const LoginButton = styled.input`
   display:block;
+  width:100%;
   height:50px;
   line-height:50px;
   margin:30px auto 0 auto;
@@ -94,6 +95,7 @@ export const LoginButton = styled.div`
   font-size:1.25rem;
   border-radius: 4px;
   transition:all 0.2s;
+  cursor:pointer;
   &:hover{
     background-color:#5b5bd8;
     color:white;
