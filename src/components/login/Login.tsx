@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import * as LoginAll from './LoginStyle';
+import { useSetRecoilState } from 'recoil';
+import { LoginPopupState } from '@states/PopupState';
+
+import * as PopupStyle from '@styles/PopupStyle';
 
 const Login : React.FC = () => {
+  const setLoginActive = useSetRecoilState(LoginPopupState);
   const [userId, setUserId] = useState<string>(""); // user ID
   const [userPw, setUserPw] = useState<string>(""); // user password
 
@@ -17,37 +21,37 @@ const Login : React.FC = () => {
   }
 
   return(
-    <LoginAll.LoginBackground>
-      <LoginAll.LoginForm onSubmit={(e) => loginSubmit(e)}>
-        <LoginAll.LoginCloseButton>
-          <LoginAll.CloseImage />
-        </LoginAll.LoginCloseButton>
+    <PopupStyle.PopupBackground>
+      <PopupStyle.PopupBody>
+        <PopupStyle.PopupCloseButton onClick={() => {setLoginActive(false)}}>
+          <PopupStyle.CloseImage />
+        </PopupStyle.PopupCloseButton>
 
-        <LoginAll.LoginBody>
-          <LoginAll.LoginBodyTitle>로그인</LoginAll.LoginBodyTitle>
-          <LoginAll.LoginInputWrap>
-            <LoginAll.LoginLabel htmlFor="userId">아이디</LoginAll.LoginLabel>
-            <LoginAll.LoginInput type='text' 
+        <PopupStyle.PopupForm onSubmit={(e) => loginSubmit(e)}>
+          <PopupStyle.PopupBodyTitle>로그인</PopupStyle.PopupBodyTitle>
+          <PopupStyle.PopupInputWrap>
+            <PopupStyle.PopupLabel htmlFor="userId">아이디</PopupStyle.PopupLabel>
+            <PopupStyle.PopupInput type='text' 
                                   id="userId"
                                   value={userId}
                                   placeholder='아이디를 입력해주세요.'
                                   onChange={(e) => {setUserId(e.target.value)}}/>
-          </LoginAll.LoginInputWrap>
+          </PopupStyle.PopupInputWrap>
 
-          <LoginAll.LoginInputWrap>
-            <LoginAll.LoginLabel>비밀번호</LoginAll.LoginLabel>
-            <LoginAll.LoginInput type="password"
+          <PopupStyle.PopupInputWrap>
+            <PopupStyle.PopupLabel>비밀번호</PopupStyle.PopupLabel>
+            <PopupStyle.PopupInput type="password"
                                  id="userPw"
                                  value={userPw}
                                  placeholder='비밀번호를 입력해주세요.'
                                  onChange={((e) => {setUserPw(e.target.value)})}
                                 />
-          </LoginAll.LoginInputWrap>
-          <LoginAll.LoginButton value="로그인" type="submit"/>
-        </LoginAll.LoginBody>
+          </PopupStyle.PopupInputWrap>
+          <PopupStyle.PopupButton value="로그인" type="submit"/>
+        </PopupStyle.PopupForm>
         
-      </LoginAll.LoginForm>
-    </LoginAll.LoginBackground>
+      </PopupStyle.PopupBody>
+    </PopupStyle.PopupBackground>
   )
 }
 
