@@ -13,6 +13,7 @@ export default defineConfig({
       {find : '@states', replacement: path.resolve(__dirname, "src/states")},
       {find : '@types', replacement: path.resolve(__dirname, "src/types")},
       {find : '@styles', replacement: path.resolve(__dirname, "src/styles")},
+      {find : '@fb', replacement: path.resolve(__dirname, "firebase.ts")},
     ]
   }
 })
