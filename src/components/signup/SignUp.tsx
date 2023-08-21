@@ -3,14 +3,11 @@ import { useSetRecoilState } from 'recoil';
 import { getAuth, createUserWithEmailAndPassword, updateProfileService } from '@fb';
 
 import { SignUpPopupState, isLoadingState } from '@states/PopupState';
-import { userInfo, isLogin } from '@states/UserState';
 
 import * as PopupStyle from "@styles/PopupStyle";
 
 const Popup : React.FC = () => {
   const setPopupActive = useSetRecoilState(SignUpPopupState); // 회원가입 팝업
-  const setUserInfo = useSetRecoilState(userInfo); // 사용자 정보
-  const setLogin = useSetRecoilState(isLogin);
   const setLoading = useSetRecoilState(isLoadingState);
   const [userId, setUserId] = useState<string>(""); // user ID
   const [userPw, setUserPw] = useState<string>(""); // user password
@@ -41,19 +38,11 @@ const Popup : React.FC = () => {
     try{
       setLoading(true);
       const auth = getAuth();
-      const { user } = await createUserWithEmailAndPassword(auth, userId, userPw);
+      await createUserWithEmailAndPassword(auth, userId, userPw);
       
       if(auth.currentUser) await updateProfileService(auth.currentUser, {displayName : userName});
 
-      setUserInfo([
-        {
-          uid : user.uid,
-          email : user.email,
-          displayName : user.displayName,
-        }
-      ])
-
-      setLogin(true);
+      
       alert("회원가입이 완료되었습니다!");
     } catch (error) {
       alert("회원가입 오류!!")
