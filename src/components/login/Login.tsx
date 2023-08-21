@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { getAuth, signInWithEmailAndPasswordService } from '@fb';
+
 import { LoginPopupState } from '@states/PopupState';
+import { userInfo, isLogin } from '@states/UserState';
 
 import * as PopupStyle from '@styles/PopupStyle';
 
@@ -8,15 +11,43 @@ const Login : React.FC = () => {
   const setLoginActive = useSetRecoilState(LoginPopupState);
   const [userId, setUserId] = useState<string>(""); // user ID
   const [userPw, setUserPw] = useState<string>(""); // user password
+  const setUserInfo = useSetRecoilState(userInfo); // 사용자 정보
+  const setLogin = useSetRecoilState(isLogin);
 
   const loginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(userPw.length < 8) {
-      alert("8자 이상의 비밀번호를 사용해주세요.")
+    if(userId.length < 6) {
+      alert("6자 이상의 이메일을 사용해주세요.");
+      return;
+    }
+
+    if(!userId.includes("@")){
+      alert("이메일 형식으로 작성해주세요.");
+      return;
+    }
+
+    if(userPw.length < 6) {
+      alert("6자 이상의 비밀번호를 사용해주세요.");
+      return;
     } 
 
-    if(userId.length < 6) {
-      alert("6자 이상의 아이디를 사용해주세요.");
+    try{
+      const auth = getAuth();
+      const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
+      setUserInfo([
+        {
+          uid : user.uid,
+          email : user.email !== null ? user.email : "",
+          displayName : user.displayName !== null ? user.displayName : "",
+        }
+      ])
+
+      setLogin(true);
+      alert("로그인이 완료되었습니다.")
+    } catch(error) {
+      console.log("Login Error : ", error);
+    } finally {
+      setLoginActive(false);
     }
   }
 
@@ -32,10 +63,10 @@ const Login : React.FC = () => {
           <PopupStyle.PopupInputWrap>
             <PopupStyle.PopupLabel htmlFor="userId">아이디</PopupStyle.PopupLabel>
             <PopupStyle.PopupInput type='text' 
-                                  id="userId"
-                                  value={userId}
-                                  placeholder='아이디를 입력해주세요.'
-                                  onChange={(e) => {setUserId(e.target.value)}}/>
+                                   id="userId"
+                                   value={userId}
+                                   placeholder='이메일을 입력해주세요.'
+                                   onChange={(e) => {setUserId(e.target.value)}}/>
           </PopupStyle.PopupInputWrap>
 
           <PopupStyle.PopupInputWrap>
