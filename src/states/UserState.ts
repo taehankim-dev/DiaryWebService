@@ -7,7 +7,11 @@ const isLogin = atom({
 
 const userInfo = atom({
   key: 'userInfo',
-  default : [{}],
+  default : [{
+    uid: "",
+    email: "",
+    displayName: ""
+  }]
 })
 
 export {
