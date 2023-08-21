@@ -12,14 +12,17 @@ export const HeaderContainer = styled.div`
 // HeaderSign
 export const SignLayoutPC = styled.div`
   display: flex;
-  margin:auto;
+  width:50%;
+  margin-left:auto;
   @media screen and (max-width: 500px){
     display:none;
+  }
+  @media screen and (max-width: 950px){
+    width:80%;
   }
 `
 
 export const SignLayoutMobile = styled.div`
-  display: flex;
   @media screen and (min-width: 500px){
     display:none;
   }
@@ -27,7 +30,7 @@ export const SignLayoutMobile = styled.div`
 
 export const SignButton = styled.button`
   display:flex;
-  margin:auto;
+  margin-left:auto;
   border: none;  
   border-radius: 14px;
   background:none;
