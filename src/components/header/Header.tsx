@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderSign from './HeaderSign';
 
-import { HeaderContainer } from './HeaderStyle';
+import { HeaderContainer } from '@styles/HeaderStyle';
 
 const Header : React.FC = () => {
   return (
