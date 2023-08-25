@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 export const HeaderContainer = styled.div`
   display : grid;
   grid-template-columns : 1fr 3fr 1fr;
+  background-color:#dfe6ff;
   *{
     font-family: 'omyu'
   }
@@ -22,10 +23,10 @@ export const SignLayoutPC = styled.div`
   }
 `
 
-export const SignLayoutMobile = styled.div`
-  @media screen and (min-width: 500px){
-    display:none;
-  }
+export const SignButtonGroup = styled.div`
+  display: flex;
+  margin: 25px 20px auto auto;
+  vertical-align: middle;
 `
 
 export const SignButton = styled.button`
@@ -39,5 +40,11 @@ export const SignButton = styled.button`
   &:hover{
     font-size:1.05rem;
     font-weight:bold;
+  }
+`
+
+export const SignLayoutMobile = styled.div`
+  @media screen and (min-width: 500px){
+    display:none;
   }
 `
