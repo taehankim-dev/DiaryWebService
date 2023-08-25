@@ -8,7 +8,7 @@ const Header : React.FC = () => {
     <>
       <HeaderContainer>
         <div></div>
-        <div style={{textAlign:'center'}}>
+        <div style={{textAlign:'center', cursor:'default'}}>
           <h1>오늘의 할 일</h1>
         </div>
         <HeaderSign />
