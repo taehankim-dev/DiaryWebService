@@ -1,5 +1,12 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  updateProfile, 
+  signInWithEmailAndPassword, 
+  setPersistence,
+  browserSessionPersistence,
+} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey : import.meta.env.VITE_FIREBASE_API_KEY,
@@ -15,7 +22,6 @@ const app = initializeApp(firebaseConfig);
 const authService = getAuth();
 const updateProfileService = updateProfile;
 const signInWithEmailAndPasswordService = signInWithEmailAndPassword;
-const signOutService = signOut;
 
 export {
   app,
@@ -24,5 +30,6 @@ export {
   createUserWithEmailAndPassword,
   updateProfileService,
   signInWithEmailAndPasswordService,
-  signOutService
+  setPersistence,
+  browserSessionPersistence
 }

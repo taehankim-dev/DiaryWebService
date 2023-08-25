@@ -1,39 +1,92 @@
-import React from 'react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import React, { useEffect, useState } from 'react';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+// import { useNavigate } from 'react-router-dom';
+import { authService } from '@fb';
+
 import { LoginPopupState, SignUpPopupState } from "@states/PopupState";
+import { isLoginState, userInfo } from '@states/UserState';
 
-import { isLogin, userInfo } from '@states/UserState';
-
-import { SignLayoutPC, SignLayoutMobile, SignButton } from '@styles/HeaderStyle';
-import { UserInfoT } from "../../types/SignTypes" // @types/SignTypes 가 안됨.
+import { SignLayoutPC, SignButtonGroup, SignButton } from '@styles/HeaderStyle';
 
 
 const HeaderSign : React.FC = () => {
+  // const navigate = useNavigate();
+
   const setLoginActive = useSetRecoilState(LoginPopupState);
   const setSignUpActive = useSetRecoilState(SignUpPopupState);
-  const user : UserInfoT = useRecoilValue(userInfo)[0];
-  const login = useRecoilValue(isLogin)
+  const [user, setUser] = useRecoilState(userInfo);
+  const [login, setLogin] = useRecoilState(isLoginState);
+  const [loading, setLoading] = useState(true);
+
+  // 로그인 상태 유지를 위함.
+  useEffect(() => {
+    const unsubscribe = authService.onAuthStateChanged((authUser) => {
+      if(authUser) {
+        setUser([
+          {
+            uid: authUser.uid,
+            email: authUser.email !== null ? authUser.email : "",
+            displayName: authUser.displayName !== null ? authUser.displayName : ""
+          }
+        ])
+
+        setLogin(true);
+      }
+
+      setLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+    }
+  }, [setLogin, setUser])
+
+  // 로그아웃 버튼 클릭.
+  const signOut = async() => {
+    if(window.confirm("로그아웃 하시겠습니까?")){
+      try{
+        await authService.signOut();
+  
+        setLogin(false);
+        setUser([
+          {
+            uid: "",
+            email: "",
+            displayName: ""
+          }
+        ])
+  
+        alert("로그아웃 되었습니다.");
+      } catch(err) {
+        console.log("Header Sign Signout Error :", err)
+      }
+    }
+  }
+
+  // 닉네임 클릭 시 마이페이지로 이동.
+  const goMyPage = () => {
+    // navigate("/mypage")
+  }
+
+  if(loading) {
+    return null;
+  }
   
   return(
     <>
-      <div>
-        <SignLayoutPC>
-          {login ? 
-              <>
-                {user.displayName}
-              </>
-            :
-              <>
-                <SignButton onClick={() => {setLoginActive(true)}}>로그인</SignButton>
-                <SignButton onClick={() => {setSignUpActive(true)}}>회원가입</SignButton>
-              </>
-          }
-        </SignLayoutPC>
-
-        <SignLayoutMobile>
-          1
-        </SignLayoutMobile>
-      </div>
+      <SignLayoutPC>
+        {login ? 
+            <SignButtonGroup>
+              <SignButton onClick={() => {signOut()}}>로그아웃</SignButton>
+              <SignButton onClick={() => {goMyPage()}}>{user[0].displayName}</SignButton>
+            </SignButtonGroup>
+          :
+            <SignButtonGroup>
+              <SignButton onClick={() => {setLoginActive(true)}}>로그인</SignButton>
+              <SignButton onClick={() => {setSignUpActive(true)}}>회원가입</SignButton>
+            </SignButtonGroup>
+        }
+      </SignLayoutPC>
     </>
   )
 }

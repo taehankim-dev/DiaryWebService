@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { getAuth, signInWithEmailAndPasswordService } from '@fb';
+import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPasswordService } from '@fb';
 
 import { LoginPopupState } from '@states/PopupState';
-import { userInfo, isLogin } from '@states/UserState';
+import { userInfo, isLoginState } from '@states/UserState';
 
 import * as PopupStyle from '@styles/PopupStyle';
 
@@ -12,7 +12,7 @@ const Login : React.FC = () => {
   const [userId, setUserId] = useState<string>(""); // user ID
   const [userPw, setUserPw] = useState<string>(""); // user password
   const setUserInfo = useSetRecoilState(userInfo); // 사용자 정보
-  const setLogin = useSetRecoilState(isLogin);
+  const setLogin = useSetRecoilState(isLoginState);
 
   const loginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,6 +41,14 @@ const Login : React.FC = () => {
           displayName : user.displayName !== null ? user.displayName : "",
         }
       ])
+      
+      // 로그인 유지를 위해 session에 저장.
+      setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        return signInWithEmailAndPasswordService(auth, userId, userPw);
+      }).catch((error) => {
+        console.log("Login SetPersistence Error : ", error);
+      })
 
       setLogin(true);
       alert("로그인이 완료되었습니다.")
