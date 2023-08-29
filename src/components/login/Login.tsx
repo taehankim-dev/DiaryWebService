@@ -53,7 +53,9 @@ const Login : React.FC = () => {
       setLogin(true);
       alert("로그인이 완료되었습니다.")
     } catch(error) {
-      console.log("Login Error : ", error);
+      const {code, message} = error as unknown as {code : string, message : string};
+      console.log(code, message);
+      // 코드에 따른 alert 창 띄워야 함!
     } finally {
       setLoginActive(false);
     }
