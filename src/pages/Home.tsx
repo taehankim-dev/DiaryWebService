@@ -1,12 +1,19 @@
 import React from 'react';
-import { PageContainer } from '@styles/PageLayout';
+import { PageContainerWithMenu } from '@styles/PageLayout';
+import Header from '@components/header/Header';
+import Menu from '@components/Menu';
 
 
 const Home : React.FC = () => {
   return (
-    <PageContainer>
-      home
-    </PageContainer>
+    <>
+      <Header />
+      <PageContainerWithMenu>
+        <Menu />
+        home
+      </PageContainerWithMenu>
+    </>
+    
   )
 }
 

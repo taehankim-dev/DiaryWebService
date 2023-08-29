@@ -15,8 +15,9 @@ export const PopupBackground = styled.div`
 `
 
 export const PopupBody = styled.div`
-  display: block;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 40%;
   border: 1px solid white;
   margin: auto;
@@ -24,7 +25,7 @@ export const PopupBody = styled.div`
   box-sizing:border-box;
   background:white;
   border-radius:7px;
-  transform:translate(0, 100%);
+  transform:translate(-50%, -50%);
   @media screen and (max-width:500px){
     width:80%;
   }
@@ -56,7 +57,7 @@ export const CloseImage = styled.div`
     content: '\\00d7';
     display:inline-block;
     font-size:1.5rem;
-    transform:translate(-22%,-28%);
+    transform:translate(-22%,-25%);
   }
 `
 

@@ -1,9 +1,15 @@
 import React from 'react';
+import Header from '@components/header/Header';
+
+import { PageContainer } from '@styles/PageLayout';
 
 const MyPage : React.FC = () => {
   return (
     <>
-      Mypage
+      <Header />
+      <PageContainer>
+        Mypage
+      </PageContainer>
     </>
   )
 }
