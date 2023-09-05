@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 //Header
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.header`
   display : grid;
   grid-template-columns : 1fr 3fr 1fr;
   background-color:#dfe6ff;

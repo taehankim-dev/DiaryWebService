@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 
-export const PageContainerWithMenu = styled.div`
+export const PageContainerWithMenu = styled.section`
   display:grid;
-  grid-template-columns : 1fr 4fr;
+  // grid-template-columns : 1fr 4fr;
   font-family: 'omyu';
   padding:12px;
-  background:#ccc;
+  background:#feffef;
 ` 
 
 export const PageContainer = styled.div`
