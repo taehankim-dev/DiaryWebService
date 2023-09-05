@@ -51,14 +51,20 @@ const Login : React.FC = () => {
       })
 
       setLogin(true);
-      alert("로그인이 완료되었습니다.")
-    } catch(error) {
-      const {code, message} = error as unknown as {code : string, message : string};
-      console.log(code, message);
-      // 코드에 따른 alert 창 띄워야 함!
-    } finally {
+      alert("로그인이 완료되었습니다.");
       setLoginActive(false);
-    }
+    } catch(error) {
+      const {code} = error as unknown as {code : string, message : string};
+      if (code == 'auth/user-not-found') {
+        alert('없는 사용자입니다.');
+      }
+      if (code == 'auth/wrong-password') {
+        alert('비밀번호를 다시 확인해주세요');
+      }
+      if (code == 'auth/too-many-requests') {
+        alert('잠시 후 다시 시도해 주세요');
+      }
+    } 
   }
 
   return(
