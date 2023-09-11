@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 //Header
 export const HeaderContainer = styled.header`
   display : grid;
+  height: 80px;
   grid-template-columns : 1fr 3fr 1fr;
   background-color:#dfe6ff;
   *{
@@ -25,7 +26,7 @@ export const SignLayoutPC = styled.div`
 
 export const SignButtonGroup = styled.div`
   display: flex;
-  margin: 25px 20px auto auto;
+  margin: auto;
   vertical-align: middle;
 `
 
