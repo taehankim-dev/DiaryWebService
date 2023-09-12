@@ -3,7 +3,7 @@ import { useSetRecoilState, useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '@fb';
 
-import { LoginPopupState, SignUpPopupState } from "@states/PopupState";
+import { LoginPopupState, SignUpPopupState, isLoadingState } from "@states/PopupState";
 import { isLoginState, userInfo } from '@states/UserState';
 
 import { SignLayoutPC, SignButtonGroup, SignButton } from '@styles/HeaderStyle';
@@ -14,12 +14,14 @@ const HeaderSign : React.FC = () => {
 
   const setLoginActive = useSetRecoilState(LoginPopupState);
   const setSignUpActive = useSetRecoilState(SignUpPopupState);
+  const setLoadingState = useSetRecoilState(isLoadingState);
   const [user, setUser] = useRecoilState(userInfo);
   const [login, setLogin] = useRecoilState(isLoginState);
   const [loading, setLoading] = useState(true);
 
   // 로그인 상태 유지를 위함.
   useEffect(() => {
+    setLoadingState(true);
     const unsubscribe = authService.onAuthStateChanged((authUser) => {
       if(authUser) {
         setUser([
@@ -34,12 +36,13 @@ const HeaderSign : React.FC = () => {
       }
 
       setLoading(false);
+      setLoadingState(false);
     });
 
     return () => {
       unsubscribe();
     }
-  }, [setLogin, setUser])
+  }, [setLogin, setUser, setLoadingState])
 
   // 로그아웃 버튼 클릭.
   const signOut = async() => {

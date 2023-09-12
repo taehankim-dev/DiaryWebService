@@ -5,6 +5,7 @@ import { getAuth, createUserWithEmailAndPassword, updateProfileService } from '@
 import { SignUpPopupState, isLoadingState } from '@states/PopupState';
 
 import * as PopupStyle from "@styles/PopupStyle";
+import Loading from '@components/loading/Loading';
 
 const Popup : React.FC = () => {
   const setPopupActive = useSetRecoilState(SignUpPopupState); // 회원가입 팝업
@@ -92,6 +93,7 @@ const Popup : React.FC = () => {
         </PopupStyle.PopupForm>
         
       </PopupStyle.PopupBody>
+      {!isLoadingState ? <Loading /> : <></>}
     </PopupStyle.PopupBackground>
   )
 }
