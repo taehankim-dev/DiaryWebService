@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '@iconify/react'
 import { format, addMonths, subMonths, addDays } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay } from 'date-fns'
 
+import { CalendarBodyWrap, CalendarDayWrap, CalendarHeader, CalendarWrap } from '@styles/CalendarStyle';
 
-import { CalendarBodyWrap, CalendarDayWrap, CalendarHeader, CalendarLayout, CalendarWrap, CalendarWrite } from '@styles/CalendarStyle';
+interface PropsI {
+  currentMonth : Date,
+  selectedDate : Date,
+  setCurrentMonth : Dispatch<SetStateAction<Date>>,
+  setSelectedDate : Dispatch<SetStateAction<Date>>
+}
 
 // 달력 헤더
 const RenderCalenderHeader = React.memo((
@@ -99,10 +105,8 @@ const RenderCells = React.memo((
     return <CalendarBodyWrap>{rows}</CalendarBodyWrap>
 })
 
-const Calendar : React.FC = () => {
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
+const Calendar : React.FC<PropsI> = ({currentMonth, selectedDate, setCurrentMonth, setSelectedDate}) => {
+  
   // 이전달
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
@@ -118,22 +122,17 @@ const Calendar : React.FC = () => {
   }
 
   return (
-    <CalendarLayout>
-      <CalendarWrap>
-        <RenderCalenderHeader currentMonth = {currentMonth}
-                              prevMonth = {prevMonth}
-                              nextMonth = {nextMonth}
-        />
-        <RenderDays />
-        <RenderCells currentMonth={currentMonth}
-                    selectedDate={selectedDate}
-                    onClickDate={onClickDate}
-        />
-      </CalendarWrap>
-      <CalendarWrite>
-          1
-      </CalendarWrite>
-    </CalendarLayout>
+    <CalendarWrap>
+      <RenderCalenderHeader currentMonth = {currentMonth}
+                            prevMonth = {prevMonth}
+                            nextMonth = {nextMonth}
+      />
+      <RenderDays />
+      <RenderCells currentMonth={currentMonth}
+                  selectedDate={selectedDate}
+                  onClickDate={onClickDate}
+      />
+    </CalendarWrap>
   )
 }
 
