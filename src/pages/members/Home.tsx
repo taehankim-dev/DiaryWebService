@@ -6,7 +6,6 @@ const memberHome : React.FC = () => {
   return (
     <PageContainer>
       <Calendar />
-      <div></div>
     </PageContainer>
   )
 }

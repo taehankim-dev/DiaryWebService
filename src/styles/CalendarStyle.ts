@@ -1,6 +1,18 @@
 import styled from "@emotion/styled";
 
-export const CalendarLayout = styled.div``;
+export const CalendarLayout = styled.div`
+  display:grid;
+  grid-template-columns: 3fr 1fr;
+  @media screen and (max-width:1100px){
+    grid-template-columns: 2.5fr 1fr;
+  }
+
+  @media screen and (max-width: 700px){
+    grid-template-columns: none;
+  }
+`;
+
+export const CalendarWrap = styled.div``
 
 // 달력 헤더 스타일.
 export const CalendarHeader = styled.div`
@@ -69,7 +81,7 @@ export const CalendarDayWrap = styled.div`
     border-radius: 10px;
     background-color: transparentize(#ebcfc6, 0.6);
     box-sizing: border-box;
-    &:first-child{
+    &:first-of-type{
       color:red;
     }
     &:last-child{
@@ -112,7 +124,7 @@ export const CalendarBodyWrap = styled.div`
       img{
         opacity: 0.1;
       }
-      &:first-child{
+      &:first-of-type{
         color:red;
       }
       &:last-child{
@@ -137,5 +149,11 @@ export const CalendarBodyWrap = styled.div`
       color: #aa5b42;
       font-weight:600;
     }
+  }
+`
+
+export const CalendarWrite = styled.div`
+  @media screen and (max-width: 700px){
+    margin-top:12px;
   }
 `

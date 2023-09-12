@@ -5,7 +5,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay } from 'date-fns'
 
 
-import { CalendarBodyWrap, CalendarDayWrap, CalendarHeader, CalendarLayout } from '@styles/CalendarStyle';
+import { CalendarBodyWrap, CalendarDayWrap, CalendarHeader, CalendarLayout, CalendarWrap, CalendarWrite } from '@styles/CalendarStyle';
 
 // 달력 헤더
 const RenderCalenderHeader = React.memo((
@@ -119,15 +119,20 @@ const Calendar : React.FC = () => {
 
   return (
     <CalendarLayout>
-      <RenderCalenderHeader currentMonth = {currentMonth}
-                            prevMonth = {prevMonth}
-                            nextMonth = {nextMonth}
-      />
-      <RenderDays />
-      <RenderCells currentMonth={currentMonth}
-                   selectedDate={selectedDate}
-                   onClickDate={onClickDate}
-      />
+      <CalendarWrap>
+        <RenderCalenderHeader currentMonth = {currentMonth}
+                              prevMonth = {prevMonth}
+                              nextMonth = {nextMonth}
+        />
+        <RenderDays />
+        <RenderCells currentMonth={currentMonth}
+                    selectedDate={selectedDate}
+                    onClickDate={onClickDate}
+        />
+      </CalendarWrap>
+      <CalendarWrite>
+          1
+      </CalendarWrite>
     </CalendarLayout>
   )
 }

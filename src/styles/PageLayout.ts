@@ -11,7 +11,6 @@ export const PageContainerWithMenu = styled.section`
 
 export const PageContainer = styled.article`
   display:grid;
-  grid-template-columns: 3fr 1fr;
   height:calc(100vh - 80px);
   padding:12px;
   box-sizing:border-box;
@@ -21,13 +20,7 @@ export const PageContainer = styled.article`
     // height:inherit;
     display: flex;
   } 
-  @media screen and (max-width:1100px){
-    grid-template-columns: 2.5fr 1fr;
-  }
-
-  @media screen and (max-width: 700px){
-    grid-template-columns: none;
-  }
+  
 `
 
 export const TitleSection = styled.section`
