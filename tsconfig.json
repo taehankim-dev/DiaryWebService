@@ -6,6 +6,7 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@states/*": ["src/states/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@types/*": ["src/types/*"],
       "@styles/*": ["src/styles/*"],
       "@fb" :["firebase.ts"]
