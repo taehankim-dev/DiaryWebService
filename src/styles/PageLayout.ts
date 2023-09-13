@@ -11,26 +11,45 @@ export const PageContainerWithMenu = styled.section`
 
 export const PageContainer = styled.article`
   display:grid;
-  height:calc(100vh - 80px);
+  height: 100vh;
   padding:12px;
   box-sizing:border-box;
   font-family: 'omyu';
   overflow: hidden;
-  >section{
-    // height:inherit;
-    display: flex;
+  >div{
+    height:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
   } 
-  
+`
+
+export const ScrollPageContainer = styled.article`
+  height: 100vh;
+  font-family: 'omyu';
+  overflow: hidden;
+`
+
+export const ScrollPageWrap = styled.div<{ $animate: number; }>`
+  position: relative;
+  height:200%;
+  top: ${props => props.$animate > 0 ? props.$animate * (-1) : 0}%;
+  transition: all 1.5s;
+  >section{
+    display: flex;
+    height: 50%;
+    align-items: center;
+    justify-content: center;
+  }
 `
 
 export const TitleSection = styled.section`
-  margin: auto;
+
   text-align: center;
 `
 
 export const TextWithLeftImageSection = styled.section`
   >div{
-    float:left;
     &:last-child{
       padding-left:12px;
     }

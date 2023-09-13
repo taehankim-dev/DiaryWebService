@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 
 //Header
 export const HeaderContainer = styled.header`
+  position: fixed;
   display : grid;
+  width: 100%;
   height: 80px;
   grid-template-columns : 1fr 3fr 1fr;
   background-color:#dfe6ff;

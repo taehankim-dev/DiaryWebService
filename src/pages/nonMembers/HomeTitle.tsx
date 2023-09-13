@@ -1,6 +1,6 @@
 import { ScrollInduce, TitleSection } from "@styles/PageLayout"
 
-export const HomeTitle : React.FC = () => {
+const HomeTitle : React.FC = () => {
   return (
     <TitleSection>
       <div>
@@ -14,3 +14,5 @@ export const HomeTitle : React.FC = () => {
     </TitleSection>
   )
 }
+
+export default HomeTitle;
