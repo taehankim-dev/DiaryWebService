@@ -7,13 +7,18 @@ import {
   setPersistence,
   browserSessionPersistence,
 } from 'firebase/auth';
-import { 
+import {
   getFirestore,
   collection, 
   query,
   where,
+  doc,
   addDoc, 
   getDocs, 
+  setDoc,
+  DocumentData,
+  Timestamp,
+  onSnapshot
 } from "firebase/firestore";
 
 
@@ -46,9 +51,17 @@ export {
 
 export {
   db,
+  doc,
   collection,
   query,
   where,
   addDoc,
-  getDocs
+  setDoc,
+  getDocs,
+  Timestamp,
+  onSnapshot
+}
+
+export type {
+  DocumentData
 }

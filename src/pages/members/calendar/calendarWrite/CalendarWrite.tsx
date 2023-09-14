@@ -8,6 +8,25 @@ import { CalendarWriteContents } from './CalendarWriteContents';
 import { selectedDateState } from '@states/CalendarState';
 import { CalendarInfoBtnWrap, CalendarInfoSubjectWrap, CalendarInfoWrap } from '@styles/CalendarStyle';
 
+const CalendarSubject = React.memo(() => {
+  return (
+    <CalendarInfoSubjectWrap>
+      <p>일정 입력</p>
+    </CalendarInfoSubjectWrap>
+  )
+})
+
+const CalendarBtn = React.memo((
+  {onClickReset} : {onClickReset : () => void}
+) => {
+  return(
+    <CalendarInfoBtnWrap>
+      <button onClick={onClickReset}>초기화</button>
+      <input type="submit" value="저장"/>
+    </CalendarInfoBtnWrap>
+  )
+})
+
 const CalendarInfo : React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [loc, setLoc] = useState<string>("");
@@ -41,29 +60,24 @@ const CalendarInfo : React.FC = () => {
     
   }, [calendarContents, loc, selectedDate, title])
 
-  const onClickReset = () => {
+  const onClickReset = useCallback(() => {
     const result = confirm("적으셨던 내용을 지우시겠습니까?");
     if(result){
       setTitle("");
       setLoc("");
       setCalendarContents("");
     }
-  }
+  }, [])
 
   return (
     <CalendarInfoWrap>
       <form typeof='submit' onSubmit={(e) => {onSubmitCalendarInfo(e)}}>
-        <CalendarInfoSubjectWrap>
-          <p>일정 입력</p>
-        </CalendarInfoSubjectWrap>
+        <CalendarSubject />
         <CalendarWriteTitle title={title} setTitle={setTitle} />
         <CalendarWriteDate />
         <CalendarWriteLoc loc={loc} setLoc={setLoc}/>
         <CalendarWriteContents calendarContents={calendarContents} setCalendarContents={setCalendarContents}/>
-        <CalendarInfoBtnWrap>
-          <button onClick={onClickReset}>초기화</button>
-          <input type="submit" value="저장"/>
-        </CalendarInfoBtnWrap>
+        <CalendarBtn onClickReset={onClickReset}/>
       </form>
     </CalendarInfoWrap>
   )

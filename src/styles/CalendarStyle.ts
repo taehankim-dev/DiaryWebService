@@ -122,7 +122,7 @@ export const CalendarBodyWrap = styled.div`
     justify-content: space-between;
     align-items: center;
     .col{
-      display: flex;
+      // display: flex;
       width: calc(100% / 7);
       height: 93%;
       padding:4px 1%;
@@ -136,6 +136,9 @@ export const CalendarBodyWrap = styled.div`
       box-sizing: border-box;
       .not-valid{
         color:#ccc;
+      }
+      .day{
+        display: block;
       }
       img{
         opacity: 0.1;
