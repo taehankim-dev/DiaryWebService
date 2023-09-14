@@ -6,7 +6,7 @@ import { CalendarWriteDate } from './CalendarWriteDate';
 import { CalendarWriteLoc } from './CalendarWriteLoc';
 import { CalendarWriteContents } from './CalendarWriteContents';
 import { selectedDateState } from '@states/CalendarState';
-import { CalendarInfoBtnWrap, CalendarInfoSubjectWrap, CalendarInfoWrap } from '@styles/CalendarStyle';
+import { CalendarContentsWrap, CalendarInfoBtnWrap, CalendarInfoSubjectWrap } from '@styles/CalendarInfoStyle';
 
 const CalendarSubject = React.memo(() => {
   return (
@@ -70,7 +70,7 @@ const CalendarInfo : React.FC = () => {
   }, [])
 
   return (
-    <CalendarInfoWrap>
+    <CalendarContentsWrap>
       <form typeof='submit' onSubmit={(e) => {onSubmitCalendarInfo(e)}}>
         <CalendarSubject />
         <CalendarWriteTitle title={title} setTitle={setTitle} />
@@ -79,7 +79,7 @@ const CalendarInfo : React.FC = () => {
         <CalendarWriteContents calendarContents={calendarContents} setCalendarContents={setCalendarContents}/>
         <CalendarBtn onClickReset={onClickReset}/>
       </form>
-    </CalendarInfoWrap>
+    </CalendarContentsWrap>
   )
 }
 

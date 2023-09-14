@@ -5,7 +5,7 @@ import NonMemberHome from './nonMembers/Home';
 import Loading from '@components/loading/Loading';
 import { isLoginState } from '@states/UserState';
 import { isLoadingState } from '@states/PopupState';
-import Calendar from './members/calendar/Calendar';
+import CalendarHome from './members/calendar/CalendarHome';
 
 const Home : React.FC = () => {
   const isLogIn = useRecoilValue(isLoginState);
@@ -15,7 +15,7 @@ const Home : React.FC = () => {
       <Header />
       {!loading ? 
         isLogIn ? 
-        <Calendar />
+        <CalendarHome />
         :
         <NonMemberHome />
         :
