@@ -6,11 +6,13 @@ import { LoginPopupState } from '@states/PopupState';
 import { userInfo, isLoginState } from '@states/UserState';
 
 import * as PopupStyle from '@styles/PopupStyle';
+import Loading from '@components/loading/Loading';
 
 const Login : React.FC = () => {
-  const setLoginActive = useSetRecoilState(LoginPopupState);
   const [userId, setUserId] = useState<string>(""); // user ID
   const [userPw, setUserPw] = useState<string>(""); // user password
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const setLoginActive = useSetRecoilState(LoginPopupState);
   const setUserInfo = useSetRecoilState(userInfo); // 사용자 정보
   const setLogin = useSetRecoilState(isLoginState);
 
@@ -32,6 +34,7 @@ const Login : React.FC = () => {
     } 
 
     try{
+      setIsLoading(true);
       const auth = getAuth();
       const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
       setUserInfo([
@@ -64,7 +67,9 @@ const Login : React.FC = () => {
       if (code == 'auth/too-many-requests') {
         alert('잠시 후 다시 시도해 주세요');
       }
-    } 
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return(
@@ -98,6 +103,7 @@ const Login : React.FC = () => {
         </PopupStyle.PopupForm>
         
       </PopupStyle.PopupBody>
+      {!isLoading ? <></> : <Loading />}
     </PopupStyle.PopupBackground>
   )
 }

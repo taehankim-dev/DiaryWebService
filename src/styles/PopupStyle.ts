@@ -84,8 +84,11 @@ export const PopupInputWrap = styled.div`
 `
 
 export const PopupInput = styled.input`
-  width:70%;  
-  padding:6px;
+  width: 70%;  
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-style: inset;
+  border-radius: 4px;
 `
 
 export const PopupLabel = styled.label`
