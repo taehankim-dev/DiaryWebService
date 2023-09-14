@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CalendarInfo from './CalendarInfo';
+import CalendarInfo from './calendarInfo/CalendarInfo';
 import CalendarWrite from './calendarWrite/CalendarWrite';
 import { CalendarLayout } from '@styles/CalendarStyle';
 import { PageContainer } from '@styles/PageLayout';
