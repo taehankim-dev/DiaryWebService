@@ -1,16 +1,16 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import { useRecoilState } from 'recoil';
 import { Icon } from '@iconify/react'
 import { format, addMonths, subMonths, addDays } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay } from 'date-fns'
 
 import { CalendarBodyWrap, CalendarDayWrap, CalendarHeader, CalendarWrap } from '@styles/CalendarStyle';
+import { selectedDateState } from '@states/CalendarState';
 
 interface PropsI {
   currentMonth : Date,
-  selectedDate : Date,
   setCurrentMonth : Dispatch<SetStateAction<Date>>,
-  setSelectedDate : Dispatch<SetStateAction<Date>>
 }
 
 // 달력 헤더
@@ -105,8 +105,9 @@ const RenderCells = React.memo((
     return <CalendarBodyWrap>{rows}</CalendarBodyWrap>
 })
 
-const Calendar : React.FC<PropsI> = ({currentMonth, selectedDate, setCurrentMonth, setSelectedDate}) => {
-  
+const Calendar : React.FC<PropsI> = ({currentMonth, setCurrentMonth}) => {
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+
   // 이전달
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));

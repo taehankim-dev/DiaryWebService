@@ -7,6 +7,15 @@ import {
   setPersistence,
   browserSessionPersistence,
 } from 'firebase/auth';
+import { 
+  getFirestore,
+  collection, 
+  query,
+  where,
+  addDoc, 
+  getDocs, 
+} from "firebase/firestore";
+
 
 const firebaseConfig = {
   apiKey : import.meta.env.VITE_FIREBASE_API_KEY,
@@ -22,6 +31,7 @@ const app = initializeApp(firebaseConfig);
 const authService = getAuth();
 const updateProfileService = updateProfile;
 const signInWithEmailAndPasswordService = signInWithEmailAndPassword;
+const db = getFirestore(app);
 
 export {
   app,
@@ -31,5 +41,14 @@ export {
   updateProfileService,
   signInWithEmailAndPasswordService,
   setPersistence,
-  browserSessionPersistence
+  browserSessionPersistence,
+}
+
+export {
+  db,
+  collection,
+  query,
+  where,
+  addDoc,
+  getDocs
 }

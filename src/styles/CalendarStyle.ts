@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
 
 // 달력 레이아웃.
-export const CalendarLayout = styled.div`
-  display:grid;
+export const CalendarLayout = styled.section`
+  display: grid;
+  height: calc(100vh - 100px);
+  margin-top: 80px;
   grid-template-columns: 4fr 1fr;
   @media screen and (max-width:1100px){
     grid-template-columns: 3fr 1.5fr;
@@ -170,7 +172,7 @@ export const CalendarBodyWrap = styled.div`
 export const CalendarInfoWrap = styled.div`
   padding: 0px 12px;
   font-size: 1.05em;
-  margin: 11px 6px;
+  margin: 11px 1px 16px 6px;
   border: 1px solid #dedede;
   border-radius: 4px;
   .infoItemWrap{
@@ -187,9 +189,18 @@ export const CalendarInfoWrap = styled.div`
       box-sizing: border-box;
       border-radius: 4px;
       border-color: #ccc;
+      border-style: inset;
     }
     textarea{
-      height:510px;
+      height:700px;
+    }
+  }
+
+  @media screen and (max-width: 1200px){
+    .infoItemWrap{
+      textarea{
+        height:690px;
+      }
     }
   }
 
