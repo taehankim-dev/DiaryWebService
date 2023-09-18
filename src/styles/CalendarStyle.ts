@@ -10,8 +10,8 @@ export const CalendarLayout = styled.section`
     grid-template-columns: 3fr 1.5fr;
   }
 
-  @media screen and (max-width: 700px){
-    display: block;
+  @media screen and (max-width: 800px){
+    grid-template-columns: none;
   }
 `;
 
@@ -113,7 +113,11 @@ export const CalendarBodyWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 89%;
+  height: 90.5%;
+
+  @media screen and (max-width:800px){
+    height:89%;
+  }
 
   .row{
     display: flex;

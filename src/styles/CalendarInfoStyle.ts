@@ -10,11 +10,75 @@ export const CalendarInfoContainer = styled.div`
     border: 1px solid #ccc;
     margin: 4px 0;
     border-radius: 4px;
+    >form{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @media screen and (max-width: 800px){
+    margin-left: 0px;
+    margin-top: 10px;
+    padding: 0px;
+    >div{
+      display: block;
+      float: left;
+      width: calc(50% - 8px);
+      height: 98%;
+      margin-left: 6px;
+      padding: 6px;
+      box-sizing: border-box;
+    }
   }
 `
 
-export const CalendarListWrap = styled.div`
+export const CalendarListLayout = styled.div`
   
+`
+
+export const CalendarListWrap = styled.div`
+  ul{
+    margin: 6px 0;
+    padding: 0;
+    padding-left: 4px;
+    li{
+      display: flex;
+      padding: 0;
+      list-style:none;
+      >span{
+        cursor: pointer;
+        &:first-of-type{
+          cursor: default;
+        }
+        &:nth-of-type(2){
+          margin-left:auto;
+          margin-right:6px;
+        }
+        &:nth-of-type(2), &:nth-of-type(3){
+          &:hover{
+            transition: all 0.2s;
+            transform:scale(1.2);
+          }
+        }
+      }
+      
+    }
+  }
+`
+
+
+export const PlusBtn = styled.button`
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  &:hover{
+    svg{
+      transition: all 0.3s;
+      transform: scale(1.5);
+    }
+  }
 `
 
 // 달력 정보 입력 부분.
@@ -35,16 +99,22 @@ export const CalendarContentsWrap = styled.div`
       border-color: #ccc;
       border-style: inset;
     }
+    &:nth-of-type(5){
+      height:45%;
+      textarea{
+        height: 100%;
+      }
+    }
   }
 `
 
 // 달력 일정 입력 타이틀
 export const CalendarInfoSubjectWrap = styled.div`
   display: flex;
+  height: 50px;
   border-bottom: 2px solid #ccc;
   box-sizing: border-box;
   p{
-    display: inline-flex;
     margin: 10px auto;
     font-size: 1.5em;
     font-weight: 700;
