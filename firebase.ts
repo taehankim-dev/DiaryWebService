@@ -16,6 +16,7 @@ import {
   addDoc, 
   getDocs, 
   setDoc,
+  deleteDoc,
   DocumentData,
   Timestamp,
   onSnapshot
@@ -58,6 +59,7 @@ export {
   addDoc,
   setDoc,
   getDocs,
+  deleteDoc,
   Timestamp,
   onSnapshot
 }

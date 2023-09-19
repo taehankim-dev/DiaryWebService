@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useCallback } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { collection, addDoc, db } from '@fb';
 import { CalendarWriteTitle } from './CalendarWriteTitle';
 import { CalendarWriteDate } from './CalendarWriteDate';
 import { CalendarWriteLoc } from './CalendarWriteLoc';
 import { CalendarWriteContents } from './CalendarWriteContents';
-import { selectedDateState } from '@states/CalendarState';
+import { selectedCalendarItemState, selectedDateState } from '@states/CalendarState';
 import { CalendarContentsWrap, CalendarInfoBtnWrap, CalendarInfoSubjectWrap } from '@styles/CalendarInfoStyle';
 
 const CalendarSubject = React.memo(() => {
@@ -28,16 +28,17 @@ const CalendarBtn = React.memo((
 })
 
 const CalendarInfo : React.FC = () => {
-  const [title, setTitle] = useState<string>("");
-  const [loc, setLoc] = useState<string>("");
-  const [calendarContents, setCalendarContents] = useState<string>("");
+  const [calendarItem, setCalendarItem] = useRecoilState(selectedCalendarItemState);
+  // const [title, setTitle] = useState<string>(calendarItem.title);
+  // const [loc, setLoc] = useState<string>(calendarItem.location);
+  // const [calendarContents, setCalendarContents] = useState<string>(calendarItem.contents);
   const selectedDate = useRecoilValue(selectedDateState);
 
   // 일정 저장.
   const onSubmitCalendarInfo = useCallback(async(e: React.FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
 
-    if(title === "") {
+    if(calendarItem.title === "") {
       alert("제목을 입력해주세요.")
       return;
     }
@@ -46,37 +47,43 @@ const CalendarInfo : React.FC = () => {
     if(check){
       try{
         await addDoc(collection(db, "calendar"), {
-          title : title,
-          location : loc,
+          title : calendarItem.title,
+          location : calendarItem.location,
           date : selectedDate,
-          content : calendarContents,
+          content : calendarItem.contents,
         })
 
         alert("저장되었습니다.")
+        // setTitle("");
+        // setLoc("");
+        // setCalendarContents("");
+        setCalendarItem({
+          title : "",
+          location : "",
+          contents : "",
+        })
       } catch(err){
         console.log("CalendarWrite Error :", err)
       }
     }
     
-  }, [calendarContents, loc, selectedDate, title])
+  }, [calendarItem.contents, calendarItem.location, calendarItem.title, selectedDate, setCalendarItem])
 
   const onClickReset = useCallback(() => {
     const result = confirm("적으셨던 내용을 지우시겠습니까?");
     if(result){
-      setTitle("");
-      setLoc("");
-      setCalendarContents("");
+      setCalendarItem({title: "", location: "", contents: ""})
     }
-  }, [])
+  }, [setCalendarItem])
 
   return (
     <CalendarContentsWrap>
       <form typeof='submit' onSubmit={(e) => {onSubmitCalendarInfo(e)}}>
         <CalendarSubject />
-        <CalendarWriteTitle title={title} setTitle={setTitle} />
+        <CalendarWriteTitle />
         <CalendarWriteDate />
-        <CalendarWriteLoc loc={loc} setLoc={setLoc}/>
-        <CalendarWriteContents calendarContents={calendarContents} setCalendarContents={setCalendarContents}/>
+        <CalendarWriteLoc />
+        <CalendarWriteContents />
         <CalendarBtn onClickReset={onClickReset}/>
       </form>
     </CalendarContentsWrap>

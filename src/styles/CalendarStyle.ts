@@ -15,11 +15,7 @@ export const CalendarLayout = styled.section`
   }
 `;
 
-export const CalendarWrap = styled.div`
-  @media screen and (max-width: 700px){
-    height: 420px;
-  }
-`
+export const CalendarWrap = styled.div``
 
 // 달력 헤더 스타일.
 export const CalendarHeader = styled.div`
@@ -64,8 +60,7 @@ export const CalendarHeader = styled.div`
     }
   } 
 
-  @media screen and (max-width: 700px){
-    height: 13%;
+  @media screen and (max-width: 800px){
     .col-end{
       svg{
         width:20%;
@@ -114,11 +109,6 @@ export const CalendarBodyWrap = styled.div`
   align-items: center;
   width: 100%;
   height: 90.5%;
-
-  @media screen and (max-width:800px){
-    height:89%;
-  }
-
   .row{
     display: flex;
     width: 100%;

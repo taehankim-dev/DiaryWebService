@@ -1,19 +1,22 @@
 import React from "react";
+import { useRecoilState } from "recoil";
+import { selectedCalendarItemState } from "@states/CalendarState";
 
-interface PropsI {
-  loc : string,
-  setLoc : React.Dispatch<React.SetStateAction<string>>
-}
+export const CalendarWriteLoc : React.FC = React.memo(() => {
+  const [calendarItem, setCalendarItem] = useRecoilState(selectedCalendarItemState);
 
-export const CalendarWriteLoc : React.FC<PropsI> = React.memo(({loc, setLoc}) => {
+  const onChangeLoc = (e : string) => {
+    setCalendarItem((prev) => ({...prev, location: e}));
+  }
+
   return (
     <div className='infoItemWrap'>
       <label htmlFor='loc'>장소</label>
       <input type="string"
               name="loc"
-              value={loc}
+              value={calendarItem.location}
               placeholder='일정 장소를 입력해주세요.'
-              onChange={(e) => {setLoc(e.target.value)}} />
+              onChange={(e) => {onChangeLoc(e.target.value)}} />
     </div>
   )
 })

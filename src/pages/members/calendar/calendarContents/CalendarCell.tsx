@@ -4,10 +4,11 @@ import { format, addDays } from 'date-fns';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { getDocs, collection, db, query, onSnapshot } from '@fb';
-import type { DocumentData } from '@fb';
-
-import { CalendarItemT, selectedDateInfoState, selectedDateState } from '@states/CalendarState';
+import { selectedDateInfoState, selectedDateState } from '@states/CalendarState';
 import { CalendarBodyWrap } from '@styles/CalendarStyle';
+
+import type { DocumentData } from '@fb';
+import type { CalendarItemT } from '@types/CalendarType';
 
 interface PropsI {
   currentMonth : Date, 
@@ -75,6 +76,7 @@ export const CalendarCell : React.FC<PropsI> = ({ currentMonth }) => {
       selectedDateInfo(selectedCalendarData);
     }, [data, selectedDate, selectedDateInfo])
 
+    // 날짜 클릭.
     const onClickDate = (day : Date) => {
       setSelectedDate(day);
 

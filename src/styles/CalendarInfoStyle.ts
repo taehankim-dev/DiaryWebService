@@ -104,6 +104,9 @@ export const CalendarContentsWrap = styled.div`
       textarea{
         height: 100%;
       }
+      @media screen and (max-width: 800px){
+        height: 41%;
+      }
     }
   }
 `
@@ -116,10 +119,16 @@ export const CalendarInfoSubjectWrap = styled.div`
   box-sizing: border-box;
   p{
     margin: 10px auto;
-    font-size: 1.5em;
+    font-size: 1.3rem;
     font-weight: 700;
     text-align: center;
     align-items: center;
+    >span{
+      &:last-of-type{
+        font-size: em;
+        margin-left:5px;
+      }
+    }
   }
 `
 

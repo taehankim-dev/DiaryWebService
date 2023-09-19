@@ -1,18 +1,21 @@
 import React from "react"
+import { useRecoilState } from "recoil";
+import { selectedCalendarItemState } from "@states/CalendarState"
 
-interface PropsI {
-  calendarContents : string,
-  setCalendarContents : React.Dispatch<React.SetStateAction<string>>
-}
+export const CalendarWriteContents :React.FC = React.memo(() => {
+  const [selectedCalendarItem, setSelectedCalendarItem] = useRecoilState(selectedCalendarItemState);
 
-export const CalendarWriteContents :React.FC<PropsI> = React.memo(({calendarContents, setCalendarContents}) => {
+  const onChangeContents = (e : string) => {
+    setSelectedCalendarItem(prev => ({...prev, contents : e}))
+  }
+
   return (
     <div className='infoItemWrap'> 
       <label htmlFor="body" style={{verticalAlign:'top'}}>내용</label>
       <textarea name="body"
-                value={calendarContents}
+                value={selectedCalendarItem.contents}
                 placeholder='일정의 내용을 적어주세요.'
-                onChange={(e) => {setCalendarContents(e.target.value)}} />
+                onChange={(e) => {onChangeContents(e.target.value)}} />
     </div>
   )
 })

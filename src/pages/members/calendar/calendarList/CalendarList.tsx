@@ -15,7 +15,9 @@ export const CalendarList : React.FC = () => {
       <CalendarListWrap>
         {calendarList.map((listItem, index) => 
             // <div key={item.id}>{idx+1}. {item.title}</div>
-            <CalendarListItem listItem={listItem} 
+            <CalendarListItem key={listItem.id}
+                              id={listItem.id}
+                              listItem={listItem} 
                               index={index} />
         )}
       </CalendarListWrap>
