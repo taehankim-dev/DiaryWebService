@@ -6,7 +6,7 @@ export const CalendarLayout = styled.section`
   height: calc(100vh - 100px);
   margin-top: 80px;
   grid-template-columns: 4fr 1fr;
-  @media screen and (max-width:1100px){
+  @media screen and (max-width:1200px){
     grid-template-columns: 3fr 1.5fr;
   }
 
@@ -84,7 +84,7 @@ export const CalendarDayWrap = styled.div`
   .col{
     display: flex;
     flex-dirction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     width: calc(100% / 7);
     height: 100%;
@@ -120,7 +120,7 @@ export const CalendarBodyWrap = styled.div`
       // display: flex;
       width: calc(100% / 7);
       height: 93%;
-      padding:4px 1%;
+      padding:4px;
       margin: 8px 0 0 4px;
       flex-direction: row;
       justify-content: flex-start;
@@ -134,6 +134,14 @@ export const CalendarBodyWrap = styled.div`
       }
       .day{
         display: block;
+        border-bottom: 1px solid #bcbcbc;
+        text-align: center;
+      }
+      .cell-title{
+        font-size:1rem;
+        @media screen and (max-width:800px){
+          font-size:.8rem;
+        }
       }
       img{
         opacity: 0.1;
@@ -144,6 +152,9 @@ export const CalendarBodyWrap = styled.div`
       &:last-child{
         color:blue;
       }
+    }
+    .not-valid{
+      #ccc;
     }
     .valid{
       &:hover{
@@ -162,6 +173,9 @@ export const CalendarBodyWrap = styled.div`
       background: #f3c5b6;
       color: #aa5b42;
       font-weight:600;
+      .day{
+        border-bottom: 1px solid #424242;
+      }
     }
   }
 `

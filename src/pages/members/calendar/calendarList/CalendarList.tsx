@@ -13,13 +13,15 @@ export const CalendarList : React.FC = () => {
     <CalendarListLayout>
       <CalendarListTitle />
       <CalendarListWrap>
-        {calendarList.map((listItem, index) => 
-            // <div key={item.id}>{idx+1}. {item.title}</div>
-            <CalendarListItem key={listItem.id}
-                              id={listItem.id}
-                              listItem={listItem} 
-                              index={index} />
-        )}
+        <ul>
+          {calendarList.map((listItem, index) => 
+              // <div key={item.id}>{idx+1}. {item.title}</div>
+              <CalendarListItem key={listItem.id}
+                                id={listItem.id}
+                                listItem={listItem} 
+                                index={index} />
+          )}
+        </ul>
       </CalendarListWrap>
       
     </CalendarListLayout>

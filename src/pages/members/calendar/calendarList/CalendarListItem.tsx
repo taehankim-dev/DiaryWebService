@@ -38,9 +38,12 @@ export const CalendarListItem : React.FC<PropsT> = React.memo(({id, listItem, in
   }
 
   return (
-    <ul>
+    
       <li>
-        <span>{index+1}. {listItem.title}</span>
+        <div>
+          <span>{index+1}. </span> 
+          <span>{listItem.title}</span>
+        </div>
         <span>
           <Icon icon="streamline:interface-edit-write-2-change-document-edit-modify-paper-pencil-write-writing" 
                 color='#8e2eff'
@@ -52,6 +55,6 @@ export const CalendarListItem : React.FC<PropsT> = React.memo(({id, listItem, in
                 onClick={onClickCalendarItemDel}/>
         </span>
       </li>
-    </ul>
+    
   )
 })

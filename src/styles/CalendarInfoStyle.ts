@@ -44,17 +44,25 @@ export const CalendarListWrap = styled.div`
     li{
       display: flex;
       padding: 0;
+      align-items: center;
       list-style:none;
+      >div{
+        width: 100%;
+        padding-left:4px;
+        >span{
+          display:inline-flex;
+          &:last-of-type{
+            width:95%;
+          }
+        }
+      }
       >span{
         cursor: pointer;
         &:first-of-type{
-          cursor: default;
-        }
-        &:nth-of-type(2){
           margin-left:auto;
           margin-right:6px;
         }
-        &:nth-of-type(2), &:nth-of-type(3){
+        &:first-of-type, &:nth-of-type(2){
           &:hover{
             transition: all 0.2s;
             transform:scale(1.2);
