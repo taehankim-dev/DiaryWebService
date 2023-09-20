@@ -11,14 +11,18 @@ export const CalendarInfoContainer = styled.div`
     margin: 4px 0;
     border-radius: 4px;
     >form{
+      display: inline-grid;
+      justify-items: stretch;
+      align-items: baseline;
       width: 100%;
       height: 100%;
     }
   }
 
   @media screen and (max-width: 800px){
+    height: calc(40% - 20px);
     margin-left: 0px;
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 0px;
     >div{
       display: block;
@@ -33,11 +37,14 @@ export const CalendarInfoContainer = styled.div`
 `
 
 export const CalendarListLayout = styled.div`
-  
+  height: 60%;
 `
 
 export const CalendarListWrap = styled.div`
+  height: calc(100% - 50px);
+  overflow-y : scroll;
   ul{
+    width: calc(100% - 14px);
     margin: 6px 0;
     padding: 0;
     padding-left: 4px;
@@ -46,13 +53,15 @@ export const CalendarListWrap = styled.div`
       padding: 0;
       align-items: center;
       list-style:none;
-      >div{
+      >.list-item-title{
+        display: flex;
         width: 100%;
         padding-left:4px;
         >span{
           display:inline-flex;
           &:last-of-type{
-            width:95%;
+            width: 90%;
+            padding-left: 2px;
           }
         }
       }
@@ -91,8 +100,8 @@ export const PlusBtn = styled.button`
 
 // 달력 정보 입력 부분.
 export const CalendarContentsWrap = styled.div`
+  height: calc(100% - 60% - 18px);
   .infoItemWrap{
-    margin: 12px 0;
     label{
       display:inline-block;
       width: 20%;
@@ -100,7 +109,7 @@ export const CalendarContentsWrap = styled.div`
       text-align: center;
     }
     input, textarea{
-      width: calc(100% - 23%);
+      width: calc(100% - 25%);
       padding: 6px;
       box-sizing: border-box;
       border-radius: 4px;
@@ -108,13 +117,13 @@ export const CalendarContentsWrap = styled.div`
       border-style: inset;
     }
     &:nth-of-type(5){
-      height:45%;
       textarea{
-        height: 100%;
+        height: 150px;
+        @media screen and (max-width: 800px){
+          height: 135px;
+        }
       }
-      @media screen and (max-width: 800px){
-        height: 41%;
-      }
+      
     }
   }
 `

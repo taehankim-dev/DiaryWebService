@@ -1,7 +1,11 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Icon } from '@iconify/react'; 
-import { selectedCalendarItemState } from '@states/CalendarState';
+import { 
+  selectedCalendarItemTitleState,
+  selectedCalendarItemLocState,
+  selectedCalendarItemContentState 
+} from '@states/CalendarState';
 import { CalendarItemT } from '@types/CalendarType';
 import { db, deleteDoc, doc } from '@fb';
 
@@ -12,15 +16,15 @@ type PropsT = {
 }
 
 export const CalendarListItem : React.FC<PropsT> = React.memo(({id, listItem, index}) => {
-  const setSelectedCalendarItem = useSetRecoilState(selectedCalendarItemState);
+  const setCalendarTitle = useSetRecoilState(selectedCalendarItemTitleState);
+  const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState);
+  const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState);
 
   // 일정 목록 아이템 수정 버튼 클릭.
   const onClickCalendarItemUpdate = () => {
-    setSelectedCalendarItem({
-      title : listItem.title,
-      location : listItem.location,
-      contents : listItem.content,
-    });
+    setCalendarTitle(listItem.title);
+    setCalendarLoc(listItem.location);
+    setCalendarContent(listItem.content);
   }
 
   // 일정 목록 아이템 삭제 버튼 클릭.
@@ -40,7 +44,7 @@ export const CalendarListItem : React.FC<PropsT> = React.memo(({id, listItem, in
   return (
     
       <li>
-        <div>
+        <div className="list-item-title">
           <span>{index+1}. </span> 
           <span>{listItem.title}</span>
         </div>

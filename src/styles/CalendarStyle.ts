@@ -11,11 +11,16 @@ export const CalendarLayout = styled.section`
   }
 
   @media screen and (max-width: 800px){
+    display: block;
     grid-template-columns: none;
   }
 `;
 
-export const CalendarWrap = styled.div``
+export const CalendarWrap = styled.div`
+  @media screen and (max-width: 800px){
+    height: 60%;
+  }
+`
 
 // 달력 헤더 스타일.
 export const CalendarHeader = styled.div`
@@ -139,8 +144,21 @@ export const CalendarBodyWrap = styled.div`
       }
       .cell-title{
         font-size:1rem;
+        margin: 4px 0;
+        padding-left: 2px;
+        box-shadow: 0px 0px 1px black;
         @media screen and (max-width:800px){
           font-size:.8rem;
+        }
+      }
+      .cell-more{
+        display: flex;
+        margin: 4px auto;
+        justify-content: center;
+        font-size: 1rem;
+        @media screen and (max-width: 800px){
+          font-size:.7rem;
+          margin: 0px auto;
         }
       }
       img{

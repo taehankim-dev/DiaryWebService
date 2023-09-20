@@ -1,19 +1,24 @@
 import React, { useCallback } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Icon } from '@iconify/react';
-import { selectedCalendarItemState, selectedDateState } from '@states/CalendarState';
+import { 
+  selectedDateState,
+  selectedCalendarItemTitleState,
+  selectedCalendarItemLocState,
+  selectedCalendarItemContentState 
+} from '@states/CalendarState';
 import { CalendarInfoSubjectWrap, PlusBtn } from '@styles/CalendarInfoStyle';
 
 export const CalendarListTitle : React.FC = React.memo(() => {
-  const selectedCalendarItem = useSetRecoilState(selectedCalendarItemState);
+  const setCalendarTitle = useSetRecoilState(selectedCalendarItemTitleState);
+  const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState);
+  const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState);
   const selectedDate = useRecoilValue(selectedDateState);
   const onClickCalendarPlusBtn = useCallback(() => {
-    selectedCalendarItem({
-      title : "",
-      location : "",
-      contents : "",
-    })
-  }, [selectedCalendarItem])
+    setCalendarTitle("")
+    setCalendarLoc("")
+    setCalendarContent("")
+  }, [setCalendarContent, setCalendarLoc, setCalendarTitle])
 
   return (
     <CalendarInfoSubjectWrap>

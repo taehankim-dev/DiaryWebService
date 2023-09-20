@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
-import { selectedCalendarItemState } from '@states/CalendarState';
+import { selectedCalendarItemTitleState } from '@states/CalendarState';
 
 export const CalendarWriteTitle : React.FC = React.memo(() => {
-  const [calendarItem, setCalendarItem] = useRecoilState(selectedCalendarItemState);
-  const onChangeTitle = (e: string) => {
-    setCalendarItem((prev) => ({...prev, title: e}));
-  }
+  const [calendarTitle, setCalendarTitle] = useRecoilState(selectedCalendarItemTitleState);
+  const onChangeTitle = useCallback((e: string) => {
+    setCalendarTitle(e)
+  }, [setCalendarTitle])
   return (
     <div className='infoItemWrap'>
       <label htmlFor='title'>제목</label>
       <input type="text" 
               name="title" 
-              value={calendarItem.title} 
+              value={calendarTitle} 
               placeholder='일정의 제목을 입력해주세요.'
+              spellCheck="false"
               onChange={(e) => {onChangeTitle(e.target.value)}}/>
     </div>
   )
