@@ -122,6 +122,23 @@ export const PopupButton = styled.input`
   }
 `
 
+export const PopupAdditionalWrap = styled.div<{count : number}>`
+  padding: 6px;
+  box-sizing: border-box;
+  >button{
+    width:calc( 100% / ${props => props.count ? props.count : 1} - 4px);
+    margin: 0px 2px;
+    background: none;
+    border: none;
+    height: 30px;
+    &:hover{
+      font-weight:bold;
+      font-size:.9rem;
+      cursor: pointer;
+    }
+  }
+`
+
 //로딩 스타일, Loading Style
 export const LoadingLayout = styled.div`
   position: absolute;

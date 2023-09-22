@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPasswordService } from '@fb';
 
-import { LoginPopupState } from '@states/PopupState';
+import { LoginPopupState, SignUpPopupState } from '@states/PopupState';
 import { userInfo, isLoginState } from '@states/UserState';
 
 import * as PopupStyle from '@styles/PopupStyle';
@@ -13,9 +13,11 @@ const Login : React.FC = () => {
   const [userPw, setUserPw] = useState<string>(""); // user password
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setLoginActive = useSetRecoilState(LoginPopupState);
+  const setSignUpActive = useSetRecoilState(SignUpPopupState);
   const setUserInfo = useSetRecoilState(userInfo); // 사용자 정보
   const setLogin = useSetRecoilState(isLoginState);
 
+  // 로그인
   const loginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(userId.length < 6) {
@@ -72,6 +74,12 @@ const Login : React.FC = () => {
     }
   }
 
+  // 회원가입 버튼
+  const onClickSignUp = () => {
+    setLoginActive(false);
+    setSignUpActive(true);
+  }
+
   return(
     <PopupStyle.PopupBackground onClick={() => {setLoginActive(false)}}>
       <PopupStyle.PopupBody onClick={(e) => e.stopPropagation()}>
@@ -101,11 +109,10 @@ const Login : React.FC = () => {
           </PopupStyle.PopupInputWrap>
           <PopupStyle.PopupButton value="로그인" type="submit"/>
         </PopupStyle.PopupForm>
-        <div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-        </div>
+        <PopupStyle.PopupAdditionalWrap count={2}>
+          <button onClick={onClickSignUp}>회원가입</button>
+          <button>비밀번호 찾기</button>
+        </PopupStyle.PopupAdditionalWrap>
       </PopupStyle.PopupBody>
       {!isLoading ? <></> : <Loading />}
     </PopupStyle.PopupBackground>
