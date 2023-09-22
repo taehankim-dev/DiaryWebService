@@ -1,5 +1,10 @@
 import { atom } from "recoil"
 
+const MenuState = atom({
+  key: 'menuState',
+  default: false,
+})
+
 const LoginPopupState = atom({
   key: 'loginPopupState',
   default: false,
@@ -16,6 +21,7 @@ const isLoadingState = atom({
 })
 
 export {
+  MenuState,
   LoginPopupState,
   SignUpPopupState,
   isLoadingState

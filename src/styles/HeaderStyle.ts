@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 //Header
 export const HeaderContainer = styled.header`
   position: fixed;
-  z-index: 99;
+  z-index: 3;
   display : grid;
   width: 100%;
   height: 80px;
@@ -11,6 +11,26 @@ export const HeaderContainer = styled.header`
   background-color:#dfe6ff;
   *{
     font-family: 'omyu'
+  }
+`
+
+export const HeaderMenuBar = styled.div`
+  >span{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    font-size: 1.5rem;
+    padding-left: 12px;
+    box-sizing: border-box;
+    >svg{
+      cursor: pointer;
+      &:hover{
+        transition: all 0.3s;
+        transform: scale(1.2);
+        font-weight: bold;
+      }
+    }
+    
   }
 `
 
@@ -29,7 +49,7 @@ export const SignLayoutPC = styled.div`
 
 export const SignButtonGroup = styled.div`
   display: flex;
-  margin: auto;
+  margin: auto 5px auto auto;
   vertical-align: middle;
 `
 

@@ -9,17 +9,14 @@ import "./assets/fonts/Font.css";
 
 import { LoginPopupState, SignUpPopupState, isLoadingState } from "@states/PopupState";
 
-// 
-
 function App() {
   const isLoading = useRecoilValue(isLoadingState);
   const loginActive = useRecoilValue(LoginPopupState);
   const signUpActive = useRecoilValue(SignUpPopupState);
-
+  
   return (
     <>
       <PageRoutes />
-
       {isLoading ? <Loading /> : <></>}
       {loginActive ? <Login /> : <></>}
       {signUpActive ? <SignUp /> : <></>}

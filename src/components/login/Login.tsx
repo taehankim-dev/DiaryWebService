@@ -73,8 +73,8 @@ const Login : React.FC = () => {
   }
 
   return(
-    <PopupStyle.PopupBackground>
-      <PopupStyle.PopupBody>
+    <PopupStyle.PopupBackground onClick={() => {setLoginActive(false)}}>
+      <PopupStyle.PopupBody onClick={(e) => e.stopPropagation()}>
         <PopupStyle.PopupCloseButton onClick={() => {setLoginActive(false)}}>
           <PopupStyle.CloseImage />
         </PopupStyle.PopupCloseButton>
@@ -101,7 +101,11 @@ const Login : React.FC = () => {
           </PopupStyle.PopupInputWrap>
           <PopupStyle.PopupButton value="로그인" type="submit"/>
         </PopupStyle.PopupForm>
-        
+        <div>
+          <div>1</div>
+          <div>1</div>
+          <div>1</div>
+        </div>
       </PopupStyle.PopupBody>
       {!isLoading ? <></> : <Loading />}
     </PopupStyle.PopupBackground>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSetRecoilState, useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
 import { authService } from '@fb';
 
 import { LoginPopupState, SignUpPopupState, isLoadingState } from "@states/PopupState";
@@ -10,8 +9,6 @@ import { SignLayoutPC, SignButtonGroup, SignButton } from '@styles/HeaderStyle';
 
 
 const HeaderSign : React.FC = () => {
-  const navigate = useNavigate();
-
   const setLoginActive = useSetRecoilState(LoginPopupState);
   const setSignUpActive = useSetRecoilState(SignUpPopupState);
   const setLoadingState = useSetRecoilState(isLoadingState);
@@ -66,11 +63,6 @@ const HeaderSign : React.FC = () => {
     }
   }
 
-  // 닉네임 클릭 시 마이페이지로 이동.
-  const goMyPage = () => {
-    navigate("/mypage")
-  }
-
   if(loading) {
     return null;
   }
@@ -81,7 +73,7 @@ const HeaderSign : React.FC = () => {
         {login ? 
             <SignButtonGroup>
               <SignButton onClick={() => {signOut()}}>로그아웃</SignButton>
-              <SignButton onClick={() => {goMyPage()}}>{user[0].displayName}</SignButton>
+              <SignButton >{user[0].displayName}</SignButton>
             </SignButtonGroup>
           :
             <SignButtonGroup>
