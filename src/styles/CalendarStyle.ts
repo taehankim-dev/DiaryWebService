@@ -134,6 +134,7 @@ export const CalendarBodyWrap = styled.div`
       border-radius: 3px;
       font-size: 1.05rem;
       box-sizing: border-box;
+      cursor: default;
       .not-valid{
         color:#ccc;
       }
@@ -195,5 +196,8 @@ export const CalendarBodyWrap = styled.div`
         border-bottom: 1px solid #424242;
       }
     }
+  }
+  @media screen and (max-height: 900px){
+    height: 89%;
   }
 `

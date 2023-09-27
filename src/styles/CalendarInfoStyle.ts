@@ -57,6 +57,7 @@ export const CalendarListWrap = styled.div`
         display: flex;
         width: 100%;
         padding-left:4px;
+        cursor: default;
         >span{
           display:inline-flex;
           &:last-of-type{
@@ -71,14 +72,11 @@ export const CalendarListWrap = styled.div`
           margin-left:auto;
           margin-right:6px;
         }
-        &:first-of-type, &:nth-of-type(2){
-          &:hover{
-            transition: all 0.2s;
-            transform:scale(1.2);
-          }
+        &:hover{
+          transition: all 0.2s;
+          transform:scale(1.2);
         }
       }
-      
     }
   }
 `
@@ -122,8 +120,10 @@ export const CalendarContentsWrap = styled.div`
         @media screen and (max-width: 800px){
           height: 135px;
         }
+        @media screen and (max-height: 900px){
+          height: 50px;
+        }
       }
-      
     }
   }
 `

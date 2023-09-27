@@ -65,6 +65,8 @@ const CalendarInfo : React.FC = () => {
         location : calendarLoc,
         date : selectedDate,
         content : calendarContent,
+        createDate : selectedDate,
+        updateDate : selectedDate,
       }
       if(calendarId === ""){
         try{
@@ -76,7 +78,8 @@ const CalendarInfo : React.FC = () => {
       } else {
         try{
           const fDoc = doc(db, "calendar", calendarId);
-          await setDoc(fDoc, calendarObj);
+          const updateCalendarObj = {...calendarObj, updateDate : new Date()}
+          await setDoc(fDoc, updateCalendarObj);
           clearCalendarInfo("수정되었습니다.");
         } catch(err){
           console.log("CalendarWrite Update Error :", err);

@@ -80,20 +80,23 @@ export const CalendarCell : React.FC<PropsI> = ({ currentMonth }) => {
     // 날짜 클릭 시, 일정 정보 
     useEffect(() => {
       const selectedCalendarData : CalendarItemT[] = [];
-      data.forEach((item : CalendarItemT) => {
-        const firebaseTime = new Date(
-          item.date.seconds * 1000 + item.date.nanoseconds / 1000000
-        );
-
-        const firebaseDate = new Date(firebaseTime.toDateString());
-        if(firebaseDate.getFullYear() === selectedDate.getFullYear()
-            && firebaseDate.getMonth() === selectedDate.getMonth()
-            && firebaseDate.getDate() === selectedDate.getDate()) {
-              selectedCalendarData.push(item);
-        }
-      })
-
-      selectedDateInfo(selectedCalendarData);
+      if(data.length !== 0){
+        data.forEach((item : CalendarItemT) => {
+          const firebaseTime = new Date(
+            item.date.seconds * 1000 + item.date.nanoseconds / 1000000
+          );
+  
+          const firebaseDate = new Date(firebaseTime.toDateString());
+          if(firebaseDate.getFullYear() === selectedDate.getFullYear()
+              && firebaseDate.getMonth() === selectedDate.getMonth()
+              && firebaseDate.getDate() === selectedDate.getDate()) {
+                selectedCalendarData.push(item);
+          }
+        })
+  
+        selectedDateInfo(selectedCalendarData);
+      }
+      
     }, [data, selectedDate, selectedDateInfo])
 
     // 날짜 클릭.
@@ -145,54 +148,55 @@ export const CalendarCell : React.FC<PropsI> = ({ currentMonth }) => {
                           ? 'day not-valid'
                           : 'day'
 
-        
-        data.forEach((item : CalendarItemT) => {
-          const firebaseTime = new Date(
-            item.date.seconds * 1000 + item.date.nanoseconds / 1000000
-          );
-
-          const firebaseDate = new Date(firebaseTime.toDateString());
-          if(  firebaseDate.getFullYear() === day.getFullYear()
-              && firebaseDate.getMonth() === day.getMonth()
-              && firebaseDate.getDate() === day.getDate()) {
-            
-                let cellTitle = "";
-                // 화면 사이즈에 따른 일정 목록 제목 자르기.....
-                if(screenWidth <= 500){
-                  cellTitle = item.title.length > 4 ? item.title.slice(0,4) + "..." : item.title
-                } else if(screenWidth > 500 && screenWidth <= 600){
-                  cellTitle = item.title.length > 6 ? item.title.slice(0,6) + "..." : item.title
-                } else if(screenWidth > 600 && screenWidth <= 800){
-                  cellTitle = item.title.length > 7 ? item.title.slice(0,7) + "..." : item.title
-                } else if(screenWidth > 800 && screenWidth <= 1050){
-                  cellTitle = item.title.length > 4 ? item.title.slice(0,4) + "..." : item.title
-                } else if(screenWidth > 1050 && screenWidth <= 1200){
-                  cellTitle = item.title.length > 7 ? item.title.slice(0,7) + "..." : item.title
-                } else if(screenWidth > 1200 && screenWidth <= 1500){
-                  cellTitle = item.title.length > 10 ? item.title.slice(0,10) + "..." : item.title;
-                } else if(screenWidth > 1500 && screenWidth < 1700){
-                  cellTitle = item.title.length > 15 ? item.title.slice(0,15) + "..." : item.title;
-                } else {
-                  cellTitle = item.title.length > 18 ? item.title.slice(0,18) + "..." : item.title;
-                }
-            
-            // 현재 월과 다르다면 비활성화
-            if(!isSameMonth(day, monthStart)){
-              cellData.push(
-                <div className="cell-title not-valid" key={item.id}>
-                  {cellTitle}
-                </div>
-              )
-            } else {
-              cellData.push(
-                <div className="cell-title" key={item.id}>
-                  {cellTitle}
-                </div>
-              )
+        if(data.length !== 0){
+          data.forEach((item : CalendarItemT) => {
+            const firebaseTime = new Date(
+              item.date.seconds * 1000 + item.date.nanoseconds / 1000000
+            );
+  
+            const firebaseDate = new Date(firebaseTime.toDateString());
+            if(  firebaseDate.getFullYear() === day.getFullYear()
+                && firebaseDate.getMonth() === day.getMonth()
+                && firebaseDate.getDate() === day.getDate()) {
+              
+                  let cellTitle = "";
+                  // 화면 사이즈에 따른 일정 목록 제목 자르기.....
+                  if(screenWidth <= 500){
+                    cellTitle = item.title.length > 4 ? item.title.slice(0,4) + "..." : item.title
+                  } else if(screenWidth > 500 && screenWidth <= 600){
+                    cellTitle = item.title.length > 6 ? item.title.slice(0,6) + "..." : item.title
+                  } else if(screenWidth > 600 && screenWidth <= 800){
+                    cellTitle = item.title.length > 7 ? item.title.slice(0,7) + "..." : item.title
+                  } else if(screenWidth > 800 && screenWidth <= 1050){
+                    cellTitle = item.title.length > 4 ? item.title.slice(0,4) + "..." : item.title
+                  } else if(screenWidth > 1050 && screenWidth <= 1200){
+                    cellTitle = item.title.length > 7 ? item.title.slice(0,7) + "..." : item.title
+                  } else if(screenWidth > 1200 && screenWidth <= 1500){
+                    cellTitle = item.title.length > 10 ? item.title.slice(0,10) + "..." : item.title;
+                  } else if(screenWidth > 1500 && screenWidth < 1700){
+                    cellTitle = item.title.length > 15 ? item.title.slice(0,15) + "..." : item.title;
+                  } else {
+                    cellTitle = item.title.length > 18 ? item.title.slice(0,18) + "..." : item.title;
+                  }
+              
+              // 현재 월과 다르다면 비활성화
+              if(!isSameMonth(day, monthStart)){
+                cellData.push(
+                  <div className="cell-title not-valid" key={item.id}>
+                    {cellTitle}
+                  </div>
+                )
+              } else {
+                cellData.push(
+                  <div className="cell-title" key={item.id}>
+                    {cellTitle}
+                  </div>
+                )
+              }
             }
-          }
-        })
-
+          })
+        }
+        
         if(cellData.length === 0){
           days.push(
             <div className={"col cell "+cellStyle} key={day.toString()} onClick={() => onClickDate(tempDay)}>
