@@ -4,9 +4,10 @@ import { Icon } from '@iconify/react';
 import { 
   selectedCalendarItemTitleState,
   selectedCalendarItemLocState,
-  selectedCalendarItemContentState 
+  selectedCalendarItemContentState, 
+  selectedCalendarItemId
 } from '@states/CalendarState';
-import { CalendarItemT } from '@types/CalendarType';
+import { CalendarItemT } from '@customTypes/CalendarType';
 import { db, deleteDoc, doc } from '@fb';
 
 type PropsT = {
@@ -19,12 +20,14 @@ export const CalendarListItem : React.FC<PropsT> = React.memo(({id, listItem, in
   const setCalendarTitle = useSetRecoilState(selectedCalendarItemTitleState);
   const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState);
   const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState);
+  const setCalendarId = useSetRecoilState(selectedCalendarItemId);
 
   // 일정 목록 아이템 수정 버튼 클릭.
   const onClickCalendarItemUpdate = () => {
     setCalendarTitle(listItem.title);
     setCalendarLoc(listItem.location);
     setCalendarContent(listItem.content);
+    setCalendarId(id);
   }
 
   // 일정 목록 아이템 삭제 버튼 클릭.

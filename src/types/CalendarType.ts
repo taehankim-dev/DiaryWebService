@@ -1,4 +1,4 @@
-export type CalendarItemT = {
+type CalendarItemT = {
   id : string,
   title : string,
   date : {
@@ -9,8 +9,13 @@ export type CalendarItemT = {
   content : string,
 }
 
-export type SelectedCalendarItemT = {
+type SelectedCalendarItemT = {
   title : string,
   location : string,
   contents : string,
+}
+
+export type {
+  CalendarItemT,
+  SelectedCalendarItemT
 }

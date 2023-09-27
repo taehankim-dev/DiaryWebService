@@ -7,7 +7,7 @@
       "@pages/*": ["src/pages/*"],
       "@states/*": ["src/states/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@types/*": ["src/types/*"],
+      "@customTypes/*": ["src/types/*"],
       "@styles/*": ["src/styles/*"],
       "@fb" :["firebase.ts"]
     },

@@ -1,8 +1,8 @@
 import { atom } from "recoil";
-import { CalendarItemT } from "@types/CalendarType";
+import { CalendarItemT } from "@customTypes/CalendarType";
 
 // 선택된 날짜.
-export const selectedDateState = atom({
+export const selectedDateState = atom<Date>({
   key: "selectedDate",
   default : new Date(),
 })
@@ -11,6 +11,12 @@ export const selectedDateState = atom({
 export const selectedDateInfoState = atom<CalendarItemT[]>({
   key: "selectedCalendarInfo",
   default : [],
+})
+
+// 선택된 일정 ID
+export const selectedCalendarItemId = atom<string>({
+  key: 'selectedCalendarId',
+  default: ""
 })
 
 // 선택된 일정 제목

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { collection, addDoc, db } from '@fb';
+import { collection, addDoc, db, doc, setDoc } from '@fb';
 import { CalendarWriteTitle } from './CalendarWriteTitle';
 import { CalendarWriteDate } from './CalendarWriteDate';
 import { CalendarWriteLoc } from './CalendarWriteLoc';
@@ -9,7 +9,8 @@ import {
   selectedDateState,
   selectedCalendarItemTitleState,
   selectedCalendarItemLocState,
-  selectedCalendarItemContentState 
+  selectedCalendarItemContentState, 
+  selectedCalendarItemId
 } from '@states/CalendarState';
 import { CalendarContentsWrap, CalendarInfoBtnWrap, CalendarInfoSubjectWrap } from '@styles/CalendarInfoStyle';
 
@@ -36,7 +37,17 @@ const CalendarInfo : React.FC = () => {
   const [calendarTitle, setCalendarTitle] = useRecoilState(selectedCalendarItemTitleState);
   const [calendarLoc, setCalendarLoc] = useRecoilState(selectedCalendarItemLocState);
   const [calendarContent, setCalendarContent] = useRecoilState(selectedCalendarItemContentState);
+  const [calendarId, setCalendarId] = useRecoilState(selectedCalendarItemId);
   const selectedDate = useRecoilValue(selectedDateState);
+
+  // 저장이나 업데이트 이후 메세지 띄우면서 초기화!
+  const clearCalendarInfo = useCallback((msg : string) => {
+    alert(msg);
+    setCalendarTitle("");
+    setCalendarLoc("");
+    setCalendarContent("");
+    setCalendarId("");
+  }, [setCalendarContent, setCalendarId, setCalendarLoc, setCalendarTitle])
 
   // 일정 저장.
   const onSubmitCalendarInfo = useCallback(async(e: React.FormEvent<HTMLFormElement> ) => {
@@ -49,34 +60,39 @@ const CalendarInfo : React.FC = () => {
     
     const check = confirm("일정을 저장하시겠습니까?");
     if(check){
-      try{
-        await addDoc(collection(db, "calendar"), {
-          title : calendarTitle,
-          location : calendarLoc,
-          date : selectedDate,
-          content : calendarContent,
-        })
-
-        alert("저장되었습니다.")
-        setCalendarTitle("");
-        setCalendarLoc("");
-        setCalendarContent("");
-      } catch(err){
-        console.log("CalendarWrite Error :", err)
+      const calendarObj = {
+        title : calendarTitle,
+        location : calendarLoc,
+        date : selectedDate,
+        content : calendarContent,
       }
+      if(calendarId === ""){
+        try{
+          await addDoc(collection(db, "calendar"), calendarObj);
+          clearCalendarInfo("저장되었습니다.");
+        } catch(err){
+          console.log("CalendarWrite Error :", err)
+        }
+      } else {
+        try{
+          const fDoc = doc(db, "calendar", calendarId);
+          await setDoc(fDoc, calendarObj);
+          clearCalendarInfo("수정되었습니다.");
+        } catch(err){
+          console.log("CalendarWrite Update Error :", err);
+        }
+      }
+      
     }
     
-  }, [calendarContent, calendarLoc, calendarTitle, selectedDate, setCalendarContent, setCalendarLoc, setCalendarTitle])
+  }, [calendarContent, calendarId, calendarLoc, calendarTitle, clearCalendarInfo, selectedDate])
 
   const onClickReset = useCallback((e : React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const result = confirm("적으셨던 내용을 지우시겠습니까?");
-    if(result){
-      setCalendarTitle("")
-      setCalendarLoc("")
-      setCalendarContent("")
-    }
-  }, [setCalendarContent, setCalendarLoc, setCalendarTitle])
+    if(result) clearCalendarInfo("삭제되었습니다.")
+    
+  }, [clearCalendarInfo])
 
   return (
     <CalendarContentsWrap>

@@ -6,11 +6,11 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { getDocs, collection, db, query, onSnapshot } from '@fb';
 import { Icon } from '@iconify/react';
-import { selectedCalendarItemContentState, selectedCalendarItemLocState, selectedCalendarItemTitleState, selectedDateInfoState, selectedDateState } from '@states/CalendarState';
+import { selectedCalendarItemContentState, selectedCalendarItemId, selectedCalendarItemLocState, selectedCalendarItemTitleState, selectedDateInfoState, selectedDateState } from '@states/CalendarState';
 import { CalendarBodyWrap } from '@styles/CalendarStyle';
 
 import type { DocumentData } from '@fb';
-import type { CalendarItemT } from '@types/CalendarType';
+import type { CalendarItemT } from '@customTypes/CalendarType';
 
 interface PropsI {
   currentMonth : Date, 
@@ -24,9 +24,10 @@ export const CalendarCell : React.FC<PropsI> = ({ currentMonth }) => {
     const [data, setData] = useState<DocumentData>([]);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
-    const setCalendarTitle = useSetRecoilState(selectedCalendarItemTitleState)
-    const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState)
-    const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState)
+    const setCalendarTitle = useSetRecoilState(selectedCalendarItemTitleState);
+    const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState);
+    const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState);
+    const setCalendarId = useSetRecoilState(selectedCalendarItemId);
     const selectedDateInfo = useSetRecoilState(selectedDateInfoState);
 
     // 화면 변화 감지
@@ -104,6 +105,7 @@ export const CalendarCell : React.FC<PropsI> = ({ currentMonth }) => {
       setCalendarTitle("");
       setCalendarLoc("");
       setCalendarContent("");
+      setCalendarId("");
 
       const selectedCalendarData : CalendarItemT[] = [];
       data.forEach((item : CalendarItemT) => {

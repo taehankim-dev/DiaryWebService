@@ -12,7 +12,7 @@ export default defineConfig({
       {find : '@pages', replacement: path.resolve(__dirname, "src/pages")},
       {find : '@states', replacement: path.resolve(__dirname, "src/states")},
       {find : '@hooks', replacement: path.resolve(__dirname, "src/hooks")},
-      {find : '@types', replacement: path.resolve(__dirname, "src/types")},
+      {find : '@customTypes', replacement: path.resolve(__dirname, "src/types")},
       {find : '@styles', replacement: path.resolve(__dirname, "src/styles")},
       {find : '@fb', replacement: path.resolve(__dirname, "firebase.ts")},
     ]
