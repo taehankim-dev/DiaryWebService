@@ -17,6 +17,12 @@ export const MenuWrap = styled.div`
   width: 20%;
   height: 100%;
   background: white;
+  @media screen and (max-width: 1000px){
+    width: 30%;
+  }
+  @media screen and (max-width: 500px){
+    width: 50%;
+  }
 `
 
 export const CloseWrap = styled.div`

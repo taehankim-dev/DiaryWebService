@@ -12,6 +12,9 @@ export const HeaderContainer = styled.header`
   *{
     font-family: 'omyu'
   }
+  @media screen and (max-width: 1100px){
+    grid-template-columns: 1fr 2fr 1fr;
+  }
 `
 
 export const HeaderMenuBar = styled.div`
@@ -62,7 +65,7 @@ export const SignButton = styled.button`
   transition:all 0.3s;
   cursor: pointer;
   &:hover{
-    font-size:1.05rem;
+    font-size:1.03rem;
     font-weight:bold;
   }
 `
