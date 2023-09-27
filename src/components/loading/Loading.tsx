@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoadingLayout, LoadingContainer, LoadingBorder, LoadingText} from "@styles/PopupStyle";
+import { LoadingLayout, LoadingContainer, LoadingBorder, LoadingText} from "@styles/LoadingStyle";
 
 const Loading : React.FC = () => {
   return (

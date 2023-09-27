@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react';
 
 //회원가입 및 로그인 스타일 , SignUp and Login style
 export const PopupBackground = styled.div`
@@ -137,62 +136,4 @@ export const PopupAdditionalWrap = styled.div<{count : number}>`
       cursor: pointer;
     }
   }
-`
-
-//로딩 스타일, Loading Style
-export const LoadingLayout = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:#171616a6;
-  z-index:5;
-`
-
-const rotateLoading = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`
-
-const LoadingTextOpacity = keyframes`
-  0% {opacity: 0}
-  20% {opacity: 0}
-  50% {opacity: 1}
-  100% {opacity: 0}
-`
-
-export const LoadingContainer = styled.div`
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: auto;
-  border-radius: 100%;
-  transform: translate(0, 200%);
-`
-
-export const LoadingBorder = styled.div`
-  position: inherit;
-  width: inherit;
-  height: inherit;
-  border-radius: 100%;
-  border: 2px solid transparent;
-  border-color: transparent #fff transparent #fff;
-  animation: ${rotateLoading} 1.5s linear 0s infinite normal;
-`
-
-export const LoadingText = styled.div`
-  width: inherit;  
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  opacity: 0;
-  text-align: center;
-  text-transform: uppercase;
-  transform: translate(0, -370%);
-  animation: ${LoadingTextOpacity} 2s linear 0s infinite normal;
 `
