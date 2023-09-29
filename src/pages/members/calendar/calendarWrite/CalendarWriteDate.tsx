@@ -9,9 +9,11 @@ export const CalendarWriteDate : React.FC = React.memo(() => {
 
   return (
     <div className='infoItemWrap'>
-      <label htmlFor='date'>날짜</label>
+      <label htmlFor='calendarDate'>날짜</label>
       <input type="date" 
-              name="date"
+              name="calendarDate"
+              aria-label="calendarDate"
+              id="calendarDate"
               value={format(selectedDate, 'yyyy-MM-dd')}
               disabled/>
     </div>
