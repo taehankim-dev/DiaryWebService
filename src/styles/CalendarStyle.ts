@@ -93,7 +93,6 @@ export const CalendarDayWrap = styled.div`
     align-items: flex-start;
     width: calc(100% / 7);
     height: 100%;
-    padding-left: 1%;
     border-radius: 10px;
     background-color: transparentize(#ebcfc6, 0.6);
     box-sizing: border-box;
