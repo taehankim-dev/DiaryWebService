@@ -1,6 +1,11 @@
 import { atom } from "recoil";
 import { CalendarItemT } from "@customTypes/CalendarType";
 
+export const currentMonthState = atom<Date>({
+  key: "currentMonth",
+  default : new Date(),
+})
+
 // 선택된 날짜.
 export const selectedDateState = atom<Date>({
   key: "selectedDate",

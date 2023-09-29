@@ -2,15 +2,13 @@ import React from "react";
 import { Icon } from '@iconify/react'
 import { format, addMonths, subMonths } from 'date-fns';
 import { CalendarHeader as CalendarHeaderStyle } from "@styles/CalendarStyle";
+import { useRecoilState } from "recoil";
+import { currentMonthState } from "@states/CalendarState";
 
-type PropsT = {
-  currentMonth : Date,
-  setCurrentMonth : React.Dispatch<React.SetStateAction<Date>>,
-}
 
-export const CalendarHeader : React.FC<PropsT> = ({
-  currentMonth, setCurrentMonth
-}) => {
+export const CalendarHeader : React.FC = () => {
+  const [currentMonth, setCurrentMonth] = useRecoilState(currentMonthState);
+
   // 이전달
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));

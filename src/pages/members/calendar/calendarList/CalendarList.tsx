@@ -8,14 +8,12 @@ import { CalendarListLayout, CalendarListWrap } from "@styles/CalendarInfoStyle"
 export const CalendarList : React.FC = () => {
   const calendarList = useRecoilValue(selectedDateInfoState)
 
-
   return (  
     <CalendarListLayout>
       <CalendarListTitle />
       <CalendarListWrap>
         <ul>
           {calendarList.map((listItem, index) => 
-              // <div key={item.id}>{idx+1}. {item.title}</div>
               <CalendarListItem key={listItem.id}
                                 id={listItem.id}
                                 listItem={listItem} 

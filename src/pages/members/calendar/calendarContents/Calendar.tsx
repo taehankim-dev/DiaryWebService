@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CalendarHeader } from './CalendarHeader';
 import { CalendarDays } from './CalendarDays';
-import { CalendarCell } from './CalendarCell';
+import { CalendarCell } from './calendarCell/CalendarCell';
 import { CalendarWrap } from '@styles/CalendarStyle';
 
 const Calendar : React.FC= () => {
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
-
   return (
     <CalendarWrap>
-      <CalendarHeader currentMonth={currentMonth} 
-                      setCurrentMonth={setCurrentMonth}/>
+      <CalendarHeader />
       <CalendarDays />
-      <CalendarCell currentMonth={currentMonth} />
+      <CalendarCell />
     </CalendarWrap>
   )
 }

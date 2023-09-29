@@ -14,6 +14,7 @@ export const CalendarListTitle : React.FC = React.memo(() => {
   const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState);
   const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState);
   const selectedDate = useRecoilValue(selectedDateState);
+  
   const onClickCalendarPlusBtn = useCallback(() => {
     setCalendarTitle("")
     setCalendarLoc("")
