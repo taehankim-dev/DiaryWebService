@@ -24,13 +24,13 @@ const HeaderSign : React.FC = () => {
     setLoadingState(true);
     const unsubscribe = authService.onAuthStateChanged((authUser) => {
       if(authUser) {
-        setUser([
+        setUser(
           {
             uid: authUser.uid,
             email: authUser.email !== null ? authUser.email : "",
             displayName: authUser.displayName !== null ? authUser.displayName : ""
           }
-        ])
+        )
 
         setLogin(true);
       }
@@ -51,13 +51,13 @@ const HeaderSign : React.FC = () => {
         await authService.signOut();
   
         setLogin(false);
-        setUser([
+        setUser(
           {
             uid: "",
             email: "",
             displayName: ""
           }
-        ])
+        )
   
         alert("로그아웃 되었습니다.");
         navigate("/");
@@ -82,7 +82,7 @@ const HeaderSign : React.FC = () => {
         {login ? 
             <SignButtonGroup>
               <SignButton onClick={() => {signOut()}}>로그아웃</SignButton>
-              <SignButton onClick={() => {goMyPage()}}>{user[0].displayName}</SignButton>
+              <SignButton onClick={() => {goMyPage()}}>{user.displayName}</SignButton>
             </SignButtonGroup>
           :
             <SignButtonGroup>

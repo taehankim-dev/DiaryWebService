@@ -39,13 +39,13 @@ const Login : React.FC = () => {
       setIsLoading(true);
       const auth = getAuth();
       const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
-      setUserInfo([
+      setUserInfo(
         {
           uid : user.uid,
           email : user.email !== null ? user.email : "",
           displayName : user.displayName !== null ? user.displayName : "",
         }
-      ])
+      )
       
       // 로그인 유지를 위해 session에 저장.
       setPersistence(auth, browserSessionPersistence)
