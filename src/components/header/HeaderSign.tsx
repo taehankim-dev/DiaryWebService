@@ -7,11 +7,12 @@ import { LoginPopupState, SignUpPopupState, isLoadingState } from "@states/Popup
 import { isLoginState, userInfo } from '@states/UserState';
 
 import { SignLayoutPC, SignButtonGroup, SignButton } from '@styles/HeaderStyle';
+import { useSignOut } from '@hooks/useSignOut';
 
 
 const HeaderSign : React.FC = () => {
   const navigate = useNavigate();
-
+  const {signOut} = useSignOut();
   const setLoginActive = useSetRecoilState(LoginPopupState);
   const setSignUpActive = useSetRecoilState(SignUpPopupState);
   const setLoadingState = useSetRecoilState(isLoadingState);
@@ -45,20 +46,10 @@ const HeaderSign : React.FC = () => {
   }, [setLogin, setUser, setLoadingState])
 
   // 로그아웃 버튼 클릭.
-  const signOut = async() => {
+  const clickSignOut = async() => {
     if(window.confirm("로그아웃 하시겠습니까?")){
       try{
-        await authService.signOut();
-  
-        setLogin(false);
-        setUser(
-          {
-            uid: "",
-            email: "",
-            displayName: ""
-          }
-        )
-  
+        await signOut();
         alert("로그아웃 되었습니다.");
         navigate("/");
       } catch(err) {
@@ -81,8 +72,8 @@ const HeaderSign : React.FC = () => {
       <SignLayoutPC>
         {login ? 
             <SignButtonGroup>
-              <SignButton onClick={() => {signOut()}}>로그아웃</SignButton>
-              <SignButton onClick={() => {goMyPage()}}>{user.displayName}</SignButton>
+              <SignButton onClick={clickSignOut}>로그아웃</SignButton>
+              <SignButton onClick={goMyPage}>{user.displayName}</SignButton>
             </SignButtonGroup>
           :
             <SignButtonGroup>

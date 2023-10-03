@@ -6,6 +6,9 @@ import {
   signInWithEmailAndPassword, 
   setPersistence,
   browserSessionPersistence,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -48,6 +51,9 @@ export {
   signInWithEmailAndPasswordService,
   setPersistence,
   browserSessionPersistence,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword
 }
 
 export {
