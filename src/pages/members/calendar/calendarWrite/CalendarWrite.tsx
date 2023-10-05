@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { addDoc, collection, db, doc, updateDoc } from '@fb';
 import { CalendarWriteTitle } from './CalendarWriteTitle';
 import { CalendarWriteDate } from './CalendarWriteDate';
@@ -14,6 +14,7 @@ import {
 } from '@states/CalendarState';
 import { CalendarContentsWrap, CalendarInfoBtnWrap, CalendarInfoSubjectWrap } from '@styles/CalendarInfoStyle';
 import { userInfo } from '@states/UserState';
+import { useInitCaledarItem } from '@hooks/useCalendarItem';
 
 const CalendarSubject = React.memo(() => {
   return (
@@ -35,21 +36,19 @@ const CalendarBtn = React.memo((
 })
 
 const CalendarInfo : React.FC = () => {
-  const [calendarTitle, setCalendarTitle] = useRecoilState(selectedCalendarItemTitleState);
-  const [calendarLoc, setCalendarLoc] = useRecoilState(selectedCalendarItemLocState);
-  const [calendarContent, setCalendarContent] = useRecoilState(selectedCalendarItemContentState);
-  const [calendarId, setCalendarId] = useRecoilState(selectedCalendarItemId);
+  const calendarTitle = useRecoilValue(selectedCalendarItemTitleState);
+  const calendarLoc = useRecoilValue(selectedCalendarItemLocState);
+  const calendarContent = useRecoilValue(selectedCalendarItemContentState);
+  const calendarId = useRecoilValue(selectedCalendarItemId);
   const selectedDate = useRecoilValue(selectedDateState);
   const user = useRecoilValue(userInfo);
+  const {InitCalendarItem} = useInitCaledarItem();
 
   // 저장이나 업데이트 이후 메세지 띄우면서 초기화!
   const clearCalendarInfo = useCallback((msg : string) => {
     alert(msg);
-    setCalendarTitle("");
-    setCalendarLoc("");
-    setCalendarContent("");
-    setCalendarId("");
-  }, [setCalendarContent, setCalendarId, setCalendarLoc, setCalendarTitle])
+    InitCalendarItem();
+  }, [InitCalendarItem])
 
   // 일정 저장.
   const onSubmitCalendarInfo = useCallback(async(e: React.FormEvent<HTMLFormElement> ) => {

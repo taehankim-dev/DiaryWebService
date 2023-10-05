@@ -4,10 +4,11 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { Icon } from '@iconify/react';
 import { useCallback } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentMonthState, selectedCalendarItemContentState, selectedCalendarItemId, selectedCalendarItemLocState, selectedCalendarItemTitleState, selectedDateInfoState, selectedDateState } from '@states/CalendarState';
+import { currentMonthState, selectedDateInfoState, selectedDateState } from '@states/CalendarState';
 
 import type { CalendarItemT } from '@customTypes/CalendarType';
 import { DocumentData } from 'firebase/firestore';
+import { useInitCaledarItem } from '@hooks/useCalendarItem';
 
 type PropsT = {
   data: DocumentData,
@@ -20,12 +21,9 @@ export const RenderCalendarCell : React.FC<PropsT> = ({data, screenWidth}) => {
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
-  const setCalendarTitle = useSetRecoilState(selectedCalendarItemTitleState);
-  const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState);
-  const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState);
-  const setCalendarId = useSetRecoilState(selectedCalendarItemId);
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const selectedDateInfo = useSetRecoilState(selectedDateInfoState);
+  const {InitCalendarItem} = useInitCaledarItem();
   
   // 날짜 클릭.
   const onClickDate = useCallback((day : Date) => {
@@ -35,10 +33,7 @@ export const RenderCalendarCell : React.FC<PropsT> = ({data, screenWidth}) => {
     if(day.getDate() === selectedDate.getDate()) return;
 
     setSelectedDate(day);
-    setCalendarTitle("");
-    setCalendarLoc("");
-    setCalendarContent("");
-    setCalendarId("");
+    InitCalendarItem();
 
     const selectedCalendarData : CalendarItemT[] = [];
     data.forEach((item : CalendarItemT) => {
@@ -55,7 +50,7 @@ export const RenderCalendarCell : React.FC<PropsT> = ({data, screenWidth}) => {
     })
 
     selectedDateInfo(selectedCalendarData);
-  }, [currentMonth, data, selectedDate, selectedDateInfo, setCalendarContent, setCalendarId, setCalendarLoc, setCalendarTitle, setSelectedDate]);
+  }, [InitCalendarItem, currentMonth, data, selectedDate, selectedDateInfo, setSelectedDate]);
 
   const rows = [];
   let days = [];
