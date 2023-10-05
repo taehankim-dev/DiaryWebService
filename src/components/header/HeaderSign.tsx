@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '@fb';
+import { authService, getAuth } from '@fb';
 
 import { LoginPopupState, SignUpPopupState, isLoadingState } from "@states/PopupState";
 import { isLoginState, userInfo } from '@states/UserState';
 
 import { SignLayoutPC, SignButtonGroup, SignButton } from '@styles/HeaderStyle';
 import { useSignOut } from '@hooks/useSignOut';
-
 
 const HeaderSign : React.FC = () => {
   const navigate = useNavigate();
@@ -23,22 +22,27 @@ const HeaderSign : React.FC = () => {
   // 로그인 상태 유지를 위함.
   useEffect(() => {
     setLoadingState(true);
-    const unsubscribe = authService.onAuthStateChanged((authUser) => {
-      if(authUser) {
-        setUser(
-          {
-            uid: authUser.uid,
-            email: authUser.email !== null ? authUser.email : "",
-            displayName: authUser.displayName !== null ? authUser.displayName : ""
-          }
-        )
 
-        setLogin(true);
-      }
-
-      setLoading(false);
-      setLoadingState(false);
-    });
+    const unsubscribe = () => {
+      const auth = getAuth();
+      authService.onAuthStateChanged((authUser) => {
+        if(authUser && auth.currentUser?.emailVerified) {
+          setUser(
+            {
+              uid: authUser.uid,
+              email: authUser.email !== null ? authUser.email : "",
+              displayName: authUser.displayName !== null ? authUser.displayName : ""
+            }
+          )
+  
+          setLogin(true);
+        }
+  
+        setLoading(false);
+        setLoadingState(false);
+      });  
+    }
+    
 
     return () => {
       unsubscribe();

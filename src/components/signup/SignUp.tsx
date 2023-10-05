@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { getAuth, createUserWithEmailAndPassword, updateProfileService } from '@fb';
+import { getAuth, createUserWithEmailAndPassword, updateProfileService, sendEmailVerification } from '@fb';
+import { useCheckLogin } from '@hooks/useCheckLogin';
 
 import { SignUpPopupState, isLoadingState } from '@states/PopupState';
 
@@ -13,16 +14,13 @@ const Popup : React.FC = () => {
   const [userId, setUserId] = useState<string>(""); // user ID
   const [userPw, setUserPw] = useState<string>(""); // user password
   const [userName, setUserName] = useState<string>("");
+  const {message, loginCheck} = useCheckLogin(userId);
 
+  // 회원가입
   const PopupSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(userId.length < 6) {
-      alert("6자 이상의 이메일을 사용해주세요.");
-      return;
-    }
-
-    if(!userId.includes("@")){
-      alert("이메일 형식으로 작성해주세요.");
+    if(!loginCheck){
+      alert(message);
       return;
     }
 
@@ -40,13 +38,21 @@ const Popup : React.FC = () => {
       setLoading(true);
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, userId, userPw);
-      
-      if(auth.currentUser) await updateProfileService(auth.currentUser, {displayName : userName});
 
-      
-      alert("회원가입이 완료되었습니다!");
+      if(auth.currentUser) {
+        await sendEmailVerification(auth.currentUser)
+        await updateProfileService(auth.currentUser, {displayName : userName});
+      }
+
+      alert("입력하신 이메일로 인증을 진행해주세요!");
     } catch (error) {
-      alert("회원가입 오류!!")
+      const { code } = error as unknown as {code : string, message : string};
+      if(code === 'auth/email-already-in-use'){
+        alert("이미 등록된 사용자입니다.")
+      } else {
+        alert("회원가입 오류!!")
+      }
+      
       console.log("SignUp Error :", error);
     } finally {
       setLoading(false);

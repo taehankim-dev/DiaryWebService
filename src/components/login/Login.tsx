@@ -31,26 +31,33 @@ const Login : React.FC = () => {
     try{
       setIsLoading(true);
       const auth = getAuth();
-      const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
-      setUserInfo(
-        {
-          uid : user.uid,
-          email : user.email !== null ? user.email : "",
-          displayName : user.displayName !== null ? user.displayName : "",
-        }
-      )
-      
-      // 로그인 유지를 위해 session에 저장.
-      setPersistence(auth, browserSessionPersistence)
-      .then(() => {
-        return signInWithEmailAndPasswordService(auth, userId, userPw);
-      }).catch((error) => {
-        console.log("Login SetPersistence Error : ", error);
-      })
 
-      setLogin(true);
-      alert("로그인이 완료되었습니다.");
-      setLoginActive(false);
+      const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
+      console.log(user.emailVerified)
+      if(user.emailVerified){
+        setUserInfo(
+          {
+            uid : user.uid,
+            email : user.email !== null ? user.email : "",
+            displayName : user.displayName !== null ? user.displayName : "",
+          }
+        )
+        
+        // 로그인 유지를 위해 session에 저장.
+        setPersistence(auth, browserSessionPersistence)
+        .then(() => {
+          return signInWithEmailAndPasswordService(auth, userId, userPw);
+        }).catch((error) => {
+          console.log("Login SetPersistence Error : ", error);
+        })
+  
+        setLogin(true);
+        alert("로그인이 완료되었습니다.");
+        setLoginActive(false);
+      } else {
+        alert("이메일 인증이 필요합니다.");
+      }
+
     } catch(error) {
       const {code} = error as unknown as {code : string, message : string};
       if (code == 'auth/user-not-found') {
