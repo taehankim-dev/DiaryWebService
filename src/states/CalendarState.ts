@@ -18,7 +18,7 @@ export const selectedDateInfoState = atom<CalendarItemT[]>({
   default : [],
 })
 
-// 선택된 일정 ID
+// 선택된 일정 ID, 신규 생성과 업데이트 구분을 위함.
 export const selectedCalendarItemId = atom<string>({
   key: 'selectedCalendarId',
   default: ""

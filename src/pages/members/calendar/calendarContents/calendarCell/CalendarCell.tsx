@@ -11,12 +11,12 @@ import { CalendarBodyWrap } from '@styles/CalendarStyle';
 import type { DocumentData } from '@fb';
 import type { CalendarItemT } from '@customTypes/CalendarType';
 import { RenderCalendarCell } from './RenderCell';
+import { userInfo } from '@states/UserState';
 
 export const CalendarCell : React.FC = () => {
-  
   const [data, setData] = useState<DocumentData>([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  // const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+  const user = useRecoilValue(userInfo);
   const selectedDate = useRecoilValue(selectedDateState);
   const selectedDateInfo = useSetRecoilState(selectedDateInfoState);
 
@@ -36,12 +36,10 @@ export const CalendarCell : React.FC = () => {
     useEffect(() => {
       const getCalendarData = async() => {
         try{
-          const querySnapshot = await getDocs(
-            query(collection(db, "calendar"))
-          )
-
           const calendarData : DocumentData[] = [];
-          
+          const querySnapshot = await getDocs(
+            query(collection(db, `${user.uid} calendar`))
+          )
           querySnapshot.forEach((doc) => calendarData.push({id : doc.id, ...doc.data()}))
 
           setData(calendarData);
@@ -51,11 +49,11 @@ export const CalendarCell : React.FC = () => {
       }
 
       getCalendarData();
-    }, [])
+    }, [user.uid])
 
     // 일정 변경 감지에 따른 리렌더링
     useEffect(() => {
-      const q = query(collection(db, 'calendar'));
+      const q = query(collection(db, `${user.uid} calendar`));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const calendarData : DocumentData[] = [];
         querySnapshot.forEach((doc) => {
@@ -65,7 +63,7 @@ export const CalendarCell : React.FC = () => {
       })
 
       return () => {unsubscribe()};
-    }, []);
+    }, [user.uid]);
 
     // 날짜 클릭 시, 일정 정보 
     useEffect(() => {

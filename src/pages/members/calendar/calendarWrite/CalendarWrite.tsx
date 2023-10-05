@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { collection, addDoc, db, doc, setDoc } from '@fb';
+import { db, doc, setDoc } from '@fb';
 import { CalendarWriteTitle } from './CalendarWriteTitle';
 import { CalendarWriteDate } from './CalendarWriteDate';
 import { CalendarWriteLoc } from './CalendarWriteLoc';
@@ -13,6 +13,7 @@ import {
   selectedCalendarItemId
 } from '@states/CalendarState';
 import { CalendarContentsWrap, CalendarInfoBtnWrap, CalendarInfoSubjectWrap } from '@styles/CalendarInfoStyle';
+import { userInfo } from '@states/UserState';
 
 const CalendarSubject = React.memo(() => {
   return (
@@ -39,6 +40,7 @@ const CalendarInfo : React.FC = () => {
   const [calendarContent, setCalendarContent] = useRecoilState(selectedCalendarItemContentState);
   const [calendarId, setCalendarId] = useRecoilState(selectedCalendarItemId);
   const selectedDate = useRecoilValue(selectedDateState);
+  const user = useRecoilValue(userInfo);
 
   // 저장이나 업데이트 이후 메세지 띄우면서 초기화!
   const clearCalendarInfo = useCallback((msg : string) => {
@@ -68,27 +70,15 @@ const CalendarInfo : React.FC = () => {
         createDate : selectedDate,
         updateDate : selectedDate,
       }
-      if(calendarId === ""){
-        try{
-          await addDoc(collection(db, "calendar"), calendarObj);
-          clearCalendarInfo("저장되었습니다.");
-        } catch(err){
-          console.log("CalendarWrite Error :", err)
-        }
-      } else {
-        try{
-          const fDoc = doc(db, "calendar", calendarId);
-          const updateCalendarObj = {...calendarObj, updateDate : new Date()}
-          await setDoc(fDoc, updateCalendarObj);
-          clearCalendarInfo("수정되었습니다.");
-        } catch(err){
-          console.log("CalendarWrite Update Error :", err);
-        }
-      }
-      
+
+      const calendarRef = doc(db, `${user.uid} calendar`, user.uid);
+      setDoc(calendarRef, calendarObj);
+
+      if(calendarId === "") clearCalendarInfo("저장되었습니다.");
+      else clearCalendarInfo("수정되었습니다.");
     }
     
-  }, [calendarContent, calendarId, calendarLoc, calendarTitle, clearCalendarInfo, selectedDate])
+  }, [calendarContent, calendarId, calendarLoc, calendarTitle, clearCalendarInfo, selectedDate, user.uid])
 
   const onClickReset = useCallback((e : React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
