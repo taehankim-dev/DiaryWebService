@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPasswordService } from '@fb';
+import { useCheckLogin } from '@hooks/useCheckLogin';
 
-import { LoginPopupState, SignUpPopupState } from '@states/PopupState';
+import { FindPasswordPopupState, LoginPopupState, SignUpPopupState } from '@states/PopupState';
 import { userInfo, isLoginState } from '@states/UserState';
 
 import * as PopupStyle from '@styles/PopupStyle';
@@ -14,24 +15,16 @@ const Login : React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setLoginActive = useSetRecoilState(LoginPopupState);
   const setSignUpActive = useSetRecoilState(SignUpPopupState);
+  const setFindPwActive = useSetRecoilState(FindPasswordPopupState);
   const setUserInfo = useSetRecoilState(userInfo); // 사용자 정보
   const setLogin = useSetRecoilState(isLoginState);
+  const {message, loginCheck} = useCheckLogin(userId);
 
   // 로그인
   const loginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(userId.length < 6) {
-      alert("6자 이상의 이메일을 사용해주세요.");
-      return;
-    }
-
-    if(!userId.includes("@")){
-      alert("이메일 형식으로 작성해주세요.");
-      return;
-    }
-
-    if(userPw.length < 6) {
-      alert("6자 이상의 비밀번호를 사용해주세요.");
+    if(!loginCheck){
+      alert(message);
       return;
     } 
 
@@ -75,10 +68,16 @@ const Login : React.FC = () => {
   }
 
   // 회원가입 버튼
-  const onClickSignUp = () => {
+  const onClickSignUp = useCallback(() => {
     setLoginActive(false);
     setSignUpActive(true);
-  }
+  }, [setLoginActive, setSignUpActive]);
+
+  // 비밀번호 찾기 버튼
+  const onClickFindPw = useCallback(() => {
+    setFindPwActive(true);
+    setLoginActive(false);
+  }, [setFindPwActive, setLoginActive])
 
   return(
     <PopupStyle.PopupBackground onClick={() => {setLoginActive(false)}}>
@@ -90,7 +89,7 @@ const Login : React.FC = () => {
         <PopupStyle.PopupForm onSubmit={(e) => loginSubmit(e)}>
           <PopupStyle.PopupBodyTitle>로그인</PopupStyle.PopupBodyTitle>
           <PopupStyle.PopupInputWrap>
-            <PopupStyle.PopupLabel htmlFor="userId">아이디</PopupStyle.PopupLabel>
+            <PopupStyle.PopupLabel htmlFor="userId">이메일</PopupStyle.PopupLabel>
             <PopupStyle.PopupInput type='text' 
                                    id="userId"
                                    value={userId}
@@ -111,7 +110,7 @@ const Login : React.FC = () => {
         </PopupStyle.PopupForm>
         <PopupStyle.PopupAdditionalWrap count={2}>
           <button onClick={onClickSignUp}>회원가입</button>
-          <button>비밀번호 찾기</button>
+          <button onClick={onClickFindPw}>비밀번호 찾기</button>
         </PopupStyle.PopupAdditionalWrap>
       </PopupStyle.PopupBody>
       {!isLoading ? <></> : <Loading />}

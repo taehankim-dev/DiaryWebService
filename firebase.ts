@@ -8,7 +8,8 @@ import {
   browserSessionPersistence,
   EmailAuthProvider,
   reauthenticateWithCredential,
-  updatePassword
+  updatePassword,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -53,7 +54,8 @@ export {
   browserSessionPersistence,
   EmailAuthProvider,
   reauthenticateWithCredential,
-  updatePassword
+  updatePassword,
+  sendPasswordResetEmail
 }
 
 export {
