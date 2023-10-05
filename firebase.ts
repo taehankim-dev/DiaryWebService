@@ -10,7 +10,7 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -22,6 +22,7 @@ import {
   getDocs, 
   setDoc,
   deleteDoc,
+  updateDoc,
   DocumentData,
   Timestamp,
   onSnapshot
@@ -70,6 +71,7 @@ export {
   setDoc,
   getDocs,
   deleteDoc,
+  updateDoc,
   Timestamp,
   onSnapshot
 }

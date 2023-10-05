@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { debounce } from 'lodash'
-
-
 import { getDocs, collection, db, query, onSnapshot } from '@fb';
 import { selectedDateInfoState, selectedDateState } from '@states/CalendarState';
 import { CalendarBodyWrap } from '@styles/CalendarStyle';
-
 
 import type { DocumentData } from '@fb';
 import type { CalendarItemT } from '@customTypes/CalendarType';

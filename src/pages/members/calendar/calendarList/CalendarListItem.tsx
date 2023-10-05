@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Icon } from '@iconify/react'; 
 import { 
   selectedCalendarItemTitleState,
@@ -9,6 +9,7 @@ import {
 } from '@states/CalendarState';
 import { CalendarItemT } from '@customTypes/CalendarType';
 import { db, deleteDoc, doc } from '@fb';
+import { userInfo } from '@states/UserState';
 
 type PropsT = {
   id : string,
@@ -17,6 +18,7 @@ type PropsT = {
 }
 
 export const CalendarListItem : React.FC<PropsT> = React.memo(({id, listItem, index}) => {
+  const user = useRecoilValue(userInfo);
   const setCalendarTitle = useSetRecoilState(selectedCalendarItemTitleState);
   const setCalendarLoc = useSetRecoilState(selectedCalendarItemLocState);
   const setCalendarContent = useSetRecoilState(selectedCalendarItemContentState);
@@ -35,7 +37,7 @@ export const CalendarListItem : React.FC<PropsT> = React.memo(({id, listItem, in
     const check = confirm("해당 일정을 삭제하시겠습니까?");
     if(check){
       try{
-        await deleteDoc(doc(db, "calendar", id));
+        await deleteDoc(doc(db, `${user.uid} calendar`, id));
         alert("삭제되었습니다.")
       } catch(err){
         console.log("CalendarListItem onClickCalendarItemDel Error :", err);

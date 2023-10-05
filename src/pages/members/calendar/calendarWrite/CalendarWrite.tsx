@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { db, doc, setDoc } from '@fb';
+import { addDoc, collection, db, doc, updateDoc } from '@fb';
 import { CalendarWriteTitle } from './CalendarWriteTitle';
 import { CalendarWriteDate } from './CalendarWriteDate';
 import { CalendarWriteLoc } from './CalendarWriteLoc';
@@ -62,24 +62,31 @@ const CalendarInfo : React.FC = () => {
     
     const check = confirm("일정을 저장하시겠습니까?");
     if(check){
-      const calendarObj = {
-        title : calendarTitle,
-        location : calendarLoc,
-        date : selectedDate,
-        content : calendarContent,
-        createDate : selectedDate,
-        updateDate : selectedDate,
+      if(calendarId === "") {
+        await addDoc(collection(db, `${user.uid} calendar`), {
+          title : calendarTitle,
+          location : calendarLoc,
+          date : selectedDate,
+          content : calendarContent,
+          createDate : selectedDate,
+          updateDate : selectedDate,
+        });
+        clearCalendarInfo("저장되었습니다.");
+      } else {
+        await updateDoc(doc(db, `${user.uid} calendar`, calendarId), {
+          title : calendarTitle,
+          location : calendarLoc,
+          date : selectedDate,
+          content : calendarContent,
+          updateDate : new Date(),
+        });
+        clearCalendarInfo("수정되었습니다.");
       }
-
-      const calendarRef = doc(db, `${user.uid} calendar`, user.uid);
-      setDoc(calendarRef, calendarObj);
-
-      if(calendarId === "") clearCalendarInfo("저장되었습니다.");
-      else clearCalendarInfo("수정되었습니다.");
     }
     
   }, [calendarContent, calendarId, calendarLoc, calendarTitle, clearCalendarInfo, selectedDate, user.uid])
 
+  // 일정 내용들 초기화 버튼 클릭.
   const onClickReset = useCallback((e : React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const result = confirm("적으셨던 내용을 지우시겠습니까?");
