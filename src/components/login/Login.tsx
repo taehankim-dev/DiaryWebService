@@ -1,78 +1,22 @@
 import React, { useCallback, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPasswordService } from '@fb';
-import { useCheckLogin } from '@hooks/useCheckLogin';
-
-import { FindPasswordPopupState, LoginPopupState, SignUpPopupState } from '@states/PopupState';
-import { userInfo, isLoginState } from '@states/UserState';
-
-import * as PopupStyle from '@styles/PopupStyle';
 import Loading from '@components/loading/Loading';
 
+import { FindPasswordPopupState, LoginPopupState, SignUpPopupState } from '@states/PopupState';
+
+import * as PopupStyle from '@styles/PopupStyle';
+import { LoginForm } from './LoginForm';
+
 const Login : React.FC = () => {
-  const [userId, setUserId] = useState<string>(""); // user ID
-  const [userPw, setUserPw] = useState<string>(""); // user password
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setLoginActive = useSetRecoilState(LoginPopupState);
   const setSignUpActive = useSetRecoilState(SignUpPopupState);
   const setFindPwActive = useSetRecoilState(FindPasswordPopupState);
-  const setUserInfo = useSetRecoilState(userInfo); // 사용자 정보
-  const setLogin = useSetRecoilState(isLoginState);
-  const {message, loginCheck} = useCheckLogin(userId);
-
-  // 로그인
-  const loginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if(!loginCheck){
-      alert(message);
-      return;
-    } 
-
-    try{
-      setIsLoading(true);
-      const auth = getAuth();
-
-      const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
-      console.log(user.emailVerified)
-      if(user.emailVerified){
-        setUserInfo(
-          {
-            uid : user.uid,
-            email : user.email !== null ? user.email : "",
-            displayName : user.displayName !== null ? user.displayName : "",
-          }
-        )
-        
-        // 로그인 유지를 위해 session에 저장.
-        setPersistence(auth, browserSessionPersistence)
-        .then(() => {
-          return signInWithEmailAndPasswordService(auth, userId, userPw);
-        }).catch((error) => {
-          console.log("Login SetPersistence Error : ", error);
-        })
   
-        setLogin(true);
-        alert("로그인이 완료되었습니다.");
-        setLoginActive(false);
-      } else {
-        alert("이메일 인증이 필요합니다.");
-      }
-
-    } catch(error) {
-      const {code} = error as unknown as {code : string, message : string};
-      if (code == 'auth/user-not-found') {
-        alert('없는 사용자입니다.');
-      }
-      if (code == 'auth/wrong-password') {
-        alert('비밀번호를 다시 확인해주세요');
-      }
-      if (code == 'auth/too-many-requests') {
-        alert('잠시 후 다시 시도해 주세요');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  // 로그인창 닫기
+  const closeLoginPopup = useCallback(() => {
+    setLoginActive(false);
+  }, [setLoginActive])
 
   // 회원가입 버튼
   const onClickSignUp = useCallback(() => {
@@ -87,34 +31,14 @@ const Login : React.FC = () => {
   }, [setFindPwActive, setLoginActive])
 
   return(
-    <PopupStyle.PopupBackground onClick={() => {setLoginActive(false)}}>
+    <PopupStyle.PopupBackground onClick={closeLoginPopup}>
       <PopupStyle.PopupBody onClick={(e) => e.stopPropagation()}>
-        <PopupStyle.PopupCloseButton onClick={() => {setLoginActive(false)}}>
+        <PopupStyle.PopupCloseButton onClick={closeLoginPopup}>
           <PopupStyle.CloseImage />
         </PopupStyle.PopupCloseButton>
 
-        <PopupStyle.PopupForm onSubmit={(e) => loginSubmit(e)}>
-          <PopupStyle.PopupBodyTitle>로그인</PopupStyle.PopupBodyTitle>
-          <PopupStyle.PopupInputWrap>
-            <PopupStyle.PopupLabel htmlFor="userId">이메일</PopupStyle.PopupLabel>
-            <PopupStyle.PopupInput type='text' 
-                                   id="userId"
-                                   value={userId}
-                                   placeholder='이메일을 입력해주세요.'
-                                   onChange={(e) => {setUserId(e.target.value)}}/>
-          </PopupStyle.PopupInputWrap>
-
-          <PopupStyle.PopupInputWrap>
-            <PopupStyle.PopupLabel>비밀번호</PopupStyle.PopupLabel>
-            <PopupStyle.PopupInput type="password"
-                                 id="userPw"
-                                 value={userPw}
-                                 placeholder='비밀번호를 입력해주세요.'
-                                 onChange={((e) => {setUserPw(e.target.value)})}
-                                />
-          </PopupStyle.PopupInputWrap>
-          <PopupStyle.PopupButton value="로그인" type="submit"/>
-        </PopupStyle.PopupForm>
+        <PopupStyle.PopupBodyTitle>로그인</PopupStyle.PopupBodyTitle>
+        <LoginForm setIsLoading={setIsLoading}/>
         <PopupStyle.PopupAdditionalWrap count={2}>
           <button onClick={onClickSignUp}>회원가입</button>
           <button onClick={onClickFindPw}>비밀번호 찾기</button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { authService, getAuth } from '@fb';
@@ -50,7 +50,7 @@ const HeaderSign : React.FC = () => {
   }, [setLogin, setUser, setLoadingState])
 
   // 로그아웃 버튼 클릭.
-  const clickSignOut = async() => {
+  const clickSignOut = useCallback(async() => {
     if(window.confirm("로그아웃 하시겠습니까?")){
       try{
         await signOut();
@@ -60,12 +60,12 @@ const HeaderSign : React.FC = () => {
         console.log("Header Sign Signout Error :", err)
       }
     }
-  }
+  }, [navigate, signOut])
 
   // 닉네임 클릭 시 마이페이지로 이동.
-  const goMyPage = () => {
+  const goMyPage = useCallback(() => {
     navigate("/mypage")
-  }
+  }, [navigate])
 
   if(loading) {
     return null;
