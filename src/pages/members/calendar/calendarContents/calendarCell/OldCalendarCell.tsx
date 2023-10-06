@@ -1,3 +1,5 @@
+// 기존에 작성했던 calendar cell render 코드
+
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { debounce } from 'lodash'
@@ -7,15 +9,16 @@ import { CalendarBodyWrap } from '@styles/CalendarStyle';
 
 import type { DocumentData } from '@fb';
 import type { CalendarItemT } from '@customTypes/CalendarType';
-import { RenderCalendarCell } from './RenderCell';
+
 import { userInfo } from '@states/UserState';
+import RenderCalendarCell from './NewRenderCell';
 
 export const CalendarCell : React.FC = () => {
   const [data, setData] = useState<DocumentData>([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const user = useRecoilValue(userInfo);
   const selectedDate = useRecoilValue(selectedDateState);
-  const selectedDateInfo = useSetRecoilState(selectedDateCalendarInfoState);
+  const setSelectedDateCalendarInfo = useSetRecoilState(selectedDateCalendarInfoState);
 
     // 화면 변화 감지
     const handleResize = debounce(() => {
@@ -48,7 +51,7 @@ export const CalendarCell : React.FC = () => {
       getCalendarData();
     }, [user.uid])
 
-    // 일정 변경 감지에 따른 리렌더링
+    // 일정 변경 감지에 따른 전체 데이터 변경
     useEffect(() => {
       const q = query(collection(db, `${user.uid} calendar`));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -62,15 +65,15 @@ export const CalendarCell : React.FC = () => {
       return () => {unsubscribe()};
     }, [user.uid]);
 
-    // 날짜 클릭 시, 일정 정보 
+    // 전체 데이터 변경에 따른 날짜별 데이터 변경.
     useEffect(() => {
-      const selectedCalendarData : CalendarItemT[] = [];
-      if(data.length !== 0){
+      const unsubscribe = () => {
+        const selectedCalendarData : CalendarItemT[] = [];
         data.forEach((item : CalendarItemT) => {
           const firebaseTime = new Date(
             item.date.seconds * 1000 + item.date.nanoseconds / 1000000
           );
-  
+
           const firebaseDate = new Date(firebaseTime.toDateString());
           if(firebaseDate.getFullYear() === selectedDate.getFullYear()
               && firebaseDate.getMonth() === selectedDate.getMonth()
@@ -78,15 +81,16 @@ export const CalendarCell : React.FC = () => {
                 selectedCalendarData.push(item);
           }
         })
-  
-        selectedDateInfo(selectedCalendarData);
+
+        setSelectedDateCalendarInfo(selectedCalendarData);
       }
       
-    }, [data, selectedDate, selectedDateInfo])
+      unsubscribe();
+    }, [data, selectedDate, setSelectedDateCalendarInfo])
 
     return (
       <CalendarBodyWrap>
-        <RenderCalendarCell data={data} screenWidth={screenWidth}/>
+        <RenderCalendarCell data={data as CalendarItemT[]} screenWidth={screenWidth}/>
       </CalendarBodyWrap>
     )
 }
