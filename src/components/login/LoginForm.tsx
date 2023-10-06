@@ -33,7 +33,6 @@ export const LoginForm : React.FC<PropsI> = ({
       const auth = getAuth();
 
       const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
-      console.log(user.emailVerified)
       if(user.emailVerified){
         setUserInfo(
           {

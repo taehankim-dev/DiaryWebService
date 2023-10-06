@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { debounce } from 'lodash'
 import { getDocs, collection, db, query, onSnapshot } from '@fb';
-import { selectedDateInfoState, selectedDateState } from '@states/CalendarState';
+import { selectedDateCalendarInfoState, selectedDateState } from '@states/CalendarState';
 import { CalendarBodyWrap } from '@styles/CalendarStyle';
 
 import type { DocumentData } from '@fb';
@@ -15,7 +15,7 @@ export const CalendarCell : React.FC = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const user = useRecoilValue(userInfo);
   const selectedDate = useRecoilValue(selectedDateState);
-  const selectedDateInfo = useSetRecoilState(selectedDateInfoState);
+  const selectedDateInfo = useSetRecoilState(selectedDateCalendarInfoState);
 
     // 화면 변화 감지
     const handleResize = debounce(() => {

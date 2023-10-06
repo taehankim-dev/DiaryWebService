@@ -4,7 +4,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { Icon } from '@iconify/react';
 import { useCallback } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentMonthState, selectedDateInfoState, selectedDateState } from '@states/CalendarState';
+import { currentMonthState, selectedDateCalendarInfoState, selectedDateState } from '@states/CalendarState';
 
 import type { CalendarItemT } from '@customTypes/CalendarType';
 import { DocumentData } from 'firebase/firestore';
@@ -22,7 +22,7 @@ export const RenderCalendarCell : React.FC<PropsT> = ({data, screenWidth}) => {
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
-  const selectedDateInfo = useSetRecoilState(selectedDateInfoState);
+  const selectedDateInfo = useSetRecoilState(selectedDateCalendarInfoState);
   const {InitCalendarItem} = useInitCaledarItem();
   
   // 날짜 클릭.

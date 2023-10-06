@@ -13,8 +13,8 @@ export const selectedDateState = atom<Date>({
 })
 
 // 선택된 날짜의 정보
-export const selectedDateInfoState = atom<CalendarItemT[]>({
-  key: "selectedCalendarInfo",
+export const selectedDateCalendarInfoState = atom<CalendarItemT[]>({
+  key: "selectedDateCalendarInfo",
   default : [],
 })
 
