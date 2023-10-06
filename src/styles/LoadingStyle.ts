@@ -49,6 +49,8 @@ export const LoadingBorder = styled.div`
 `
 
 export const LoadingText = styled.div`
+  position: absolute;
+  top: 50%;
   width: inherit;  
   color: white;
   font-size: 1.5rem;
@@ -56,6 +58,6 @@ export const LoadingText = styled.div`
   opacity: 0;
   text-align: center;
   text-transform: uppercase;
-  transform: translate(0, -370%);
+  transform: translate(0, -50%);
   animation: ${LoadingTextOpacity} 2s linear 0s infinite normal;
 `
