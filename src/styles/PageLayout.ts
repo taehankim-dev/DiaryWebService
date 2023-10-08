@@ -36,17 +36,75 @@ export const ScrollPageWrap = styled.div<{ $animate: number; }>`
 `
 
 export const TitleSection = styled.section`
-
   text-align: center;
 `
 
-export const TextWithLeftImageSection = styled.section`
+const slideAni = keyframes`
+  0%{
+    left: 0%;
+    opacity: 1;
+  }
+
+  47%{
+    left: 0%;
+    opacity: 0;
+  }
+
+  53%{
+    left: -100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: -100%;
+    opacity: 1;
+  }
+`
+
+export const ScrollPageSection = styled.section`
+  height: 100%;
+  background: #f4f4f4;
   >div{
     &:last-child{
       padding-left:12px;
     }
-    >h3{
-      margin:0;
+  }
+  .img-container{
+    display: flex;
+    width: 70%;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px black;
+    border: 1px solid black;
+    .img-slider{
+      position: relative;
+      display: flex;
+      width: 100%;
+      overflow: hidden;
+      .slide_img{
+        position : relative;
+        left: 0%;
+        display: flex;
+        animation: ${slideAni} 5s linear infinite alternate;
+        animation-delay: 3s;
+      }
+      img{
+        display: inline-block;
+        width: 100%;
+        float: left;
+      }
+    }
+    
+  }
+  .body-wrap{
+    width: 25%;
+    text-align: center;
+    .body-subtitle{
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .body-text{
+      font-size: 1.3rem;
     }
   }
 `

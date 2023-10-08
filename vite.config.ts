@@ -15,6 +15,7 @@ export default defineConfig({
       {find : '@hooks', replacement: path.resolve(__dirname, "src/hooks")},
       {find : '@customTypes', replacement: path.resolve(__dirname, "src/types")},
       {find : '@styles', replacement: path.resolve(__dirname, "src/styles")},
+      {find : '@imgs', replacement: path.resolve(__dirname, "src/assets/imgs")},
       {find : '@fb', replacement: path.resolve(__dirname, "firebase.ts")},
     ]
   }

@@ -9,6 +9,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@customTypes/*": ["src/types/*"],
       "@styles/*": ["src/styles/*"],
+      "@imgs/*":["src/assets/imgs/*"],
       "@fb" :["firebase.ts"]
     },
     "useDefineForClassFields": true,
