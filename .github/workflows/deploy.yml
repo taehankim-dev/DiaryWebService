@@ -37,7 +37,12 @@ jobs:
 
     - name: Deploy to GitHub Pages
       run: |
-        yarn deploy
-      env: 
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git config --global user.email "goldmini95@gmail.com"
+        git config --global user.name "taehankim-dev"
+
+        git checkout -b gh-pages
+        git add -f dist
+        git commit -m "Deploy Vite App to github pages"
+        git subtree split --prefix dist -b gh-pages
+        git push -f origin gh-pages:gh-pages
 
