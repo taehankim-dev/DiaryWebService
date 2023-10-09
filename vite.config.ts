@@ -1,4 +1,4 @@
-import { fileURLToPath, URL } from 'node:url';
+// import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -11,7 +11,7 @@ export default defineConfig({
   resolve: {
     alias : [
       // {find : '@', replacement: path.resolve(__dirname, 'src')},
-      {find : '@', replacement: fileURLToPath(new URL('src', import.meta.url))},
+      // {find : '@', replacement: fileURLToPath(new URL('src', import.meta.url))},
       {find : '@components', replacement: path.resolve(__dirname, "src/components")},
       {find : '@pages', replacement: path.resolve(__dirname, "src/pages")},
       {find : '@states', replacement: path.resolve(__dirname, "src/states")},
