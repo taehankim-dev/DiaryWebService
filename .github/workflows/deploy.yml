@@ -35,21 +35,16 @@ jobs:
         echo "VITE_FIREBASE_APP_ID=1:209562952214:web:e0221da7030e24ea838b37" >> .env
         echo "VITE_FIREBASE_MEASUREMENT_ID=G-R5VFXQLY4W" >> .env
 
-    - name: Create 'gh-pages' branch
+    - name: Deploy to GitHub Pages
       run: |
         git config --global user.email "goldmini95@gmail.com"
         git config --global user.name "taehankim-dev"
 
-        git checkout --orphan gh-pages
-        git rm -rf .
-        touch .nojekyll
-        git add .nojekyll
-        git commit -m "Initialize gh-pages branch"
-        git push -u origin gh-pages
-
-    - name: Deploy to GitHub Pages
-      run: |
-        git checkout -b gh-pages
-        git add -f dist
-        git commit -m "Deploy Vite App to github pages"
+        git commit -am "Deploy Vite App to GitHub Pages"
+        git subtree split --prefix dist -b gh-pages
         git push -f origin gh-pages:gh-pages
+
+
+
+
+
