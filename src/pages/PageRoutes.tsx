@@ -4,8 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import MyPage from '@pages/members/mypage/MyPage';
 
-console.log(import.meta.env.BASE_URL)
-
 const PageRoutes : React.FC = () => {
   return (
     <BrowserRouter basename={`/${import.meta.env.VITE_PUBLIC_URL}`}>
