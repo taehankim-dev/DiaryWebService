@@ -17,10 +17,10 @@ const Home : React.FC = () => {
       <Header />
       <Menu />
       {!loading ? 
-        isLogIn ? 
-        <CalendarHome />
-        :
-        <NonMemberHome />
+          isLogIn ? 
+          <CalendarHome />
+          :
+          <NonMemberHome />
         :
         <Loading /> 
       }

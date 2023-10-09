@@ -33,9 +33,6 @@ const NonMemberHome : React.FC = () => {
           </div>
         </ScrollPageSection>
       </ScrollPageWrap>
-        {/*
-         */}
-      
     </ScrollPageContainer>
   )
 }
