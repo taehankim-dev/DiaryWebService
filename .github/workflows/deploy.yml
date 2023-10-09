@@ -35,6 +35,11 @@ jobs:
         echo "VITE_FIREBASE_APP_ID=1:209562952214:web:e0221da7030e24ea838b37" >> .env
         echo "VITE_FIREBASE_MEASUREMENT_ID=G-R5VFXQLY4W" >> .env
 
+    - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './dist'
+
     - name: Deploy to GitHub Pages
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
