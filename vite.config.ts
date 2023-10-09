@@ -7,7 +7,6 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/DiaryWebService/",
   resolve: {
     alias : [
       // {find : '@', replacement: path.resolve(__dirname, 'src')},
@@ -21,5 +20,6 @@ export default defineConfig({
       {find : '@imgs', replacement: path.resolve(__dirname, "src/assets/imgs")},
       {find : '@fb', replacement: path.resolve(__dirname, "firebase.ts")},
     ]
-  }
+  },
+  base: "/",
 })
