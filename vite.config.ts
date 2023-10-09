@@ -18,5 +18,12 @@ export default defineConfig({
       {find : '@imgs', replacement: path.resolve(__dirname, "src/assets/imgs")},
       {find : '@fb', replacement: path.resolve(__dirname, "firebase.ts")},
     ]
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        format: 'es'
+      },
+    }
   }
 })
