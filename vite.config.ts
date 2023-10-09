@@ -1,3 +1,5 @@
+import { fileURLToPath, URL } from 'node:url';
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
@@ -8,7 +10,8 @@ export default defineConfig({
   base: "/DiaryWebService/",
   resolve: {
     alias : [
-      {find : '@', replacement: path.resolve(__dirname, 'src')},
+      // {find : '@', replacement: path.resolve(__dirname, 'src')},
+      {find : '@', replacement: fileURLToPath(new URL('./src', import.meta.url))},
       {find : '@components', replacement: path.resolve(__dirname, "src/components")},
       {find : '@pages', replacement: path.resolve(__dirname, "src/pages")},
       {find : '@states', replacement: path.resolve(__dirname, "src/states")},
@@ -18,12 +21,5 @@ export default defineConfig({
       {find : '@imgs', replacement: path.resolve(__dirname, "src/assets/imgs")},
       {find : '@fb', replacement: path.resolve(__dirname, "firebase.ts")},
     ]
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        format: 'es'
-      },
-    }
   }
 })
