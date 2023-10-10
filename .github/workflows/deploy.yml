@@ -60,29 +60,45 @@ on:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+
       - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+        run: yarn install
+
+      - name: Build Vite App
+        run: yarn build
+
+      - name: Set Environment Variables
+        run: |
+          echo "VITE_PUBLIC_URL=DiaryWebService" >> .env
+          echo "VITE_FIREBASE_API_KEY=AIzaSyCfSF1qD4BnY2shTbBq5v8L86jUGEkGxCc" >> .env
+          echo "VITE_FIREBASE_AUTH_DOMAIN=dailynote-41bd8.firebaseapp.com" >> .env
+          echo "VITE_FIREBASE_PROJECT_ID=dailynote-41bd8" >> .env
+          echo "VITE_FIREBASE_STORAGE_BUCKET=dailynote-41bd8.appspot.com" >> .env
+          echo "VITE_FIREBASE_MESSAGING_SENDER_ID=209562952214" >> .env
+          echo "VITE_FIREBASE_APP_ID=1:209562952214:web:e0221da7030e24ea838b37" >> .env
+          echo "VITE_FIREBASE_MEASUREMENT_ID=G-R5VFXQLY4W" >> .env
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload dist repository
           path: './dist'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
