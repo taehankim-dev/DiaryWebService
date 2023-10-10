@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias : [
-      // {find : '@', replacement: path.resolve(__dirname, 'src')},
+      {find : '@', replacement: path.resolve(__dirname, 'src')},
       // {find : '@', replacement: fileURLToPath(new URL('src', import.meta.url))},
       {find : '@components', replacement: path.resolve(__dirname, "src/components")},
       {find : '@pages', replacement: path.resolve(__dirname, "src/pages")},
@@ -21,5 +21,8 @@ export default defineConfig({
       {find : '@fb', replacement: path.resolve(__dirname, "firebase.ts")},
     ]
   },
-  base: "/",
+  base: "/DiaryWebService/",
+  build: {
+    outDir: 'dist',
+  }
 })

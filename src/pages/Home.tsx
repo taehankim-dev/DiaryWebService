@@ -11,7 +11,6 @@ import Menu from '@components/menu/Menu';
 const Home : React.FC = () => {
   const isLogIn = useRecoilValue(isLoginState);
   const loading = useRecoilValue(isLoadingState);
-  console.log(loading)
   return (
     <>
       <Header />
