@@ -3,7 +3,7 @@ import { ChangePasswordItem } from './ChangePasswordItem';
 import { MyPageSubItem, MyPageChangePwItemBox } from '@styles/MyPageStyle';
 
 export const MyPageChangePw : React.FC = () => {
-  const [changeActive, setChangeActive] = useState<boolean>(true);
+  const [changeActive, setChangeActive] = useState<boolean>(false);
 
   return (
     <MyPageSubItem>
