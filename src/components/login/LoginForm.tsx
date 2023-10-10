@@ -43,13 +43,8 @@ export const LoginForm : React.FC<PropsI> = ({
         )
         
         // 로그인 유지를 위해 session에 저장.
-        setPersistence(auth, browserLocalPersistence)
-        .then(() => {
-          return signInWithEmailAndPasswordService(auth, userId, userPw);
-        }).catch((error) => {
-          console.log("Login SetPersistence Error : ", error);
-        })
-  
+        await setPersistence(auth, browserLocalPersistence)
+        
         setLogin(true);
         alert("로그인이 완료되었습니다.");
         setLoginActive(false);

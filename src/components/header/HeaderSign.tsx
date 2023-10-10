@@ -24,7 +24,6 @@ const HeaderSign : React.FC = () => {
       setLoadingState(true);
       const auth = getAuth();
       authService.onAuthStateChanged((authUser) => {
-        console.log("authUser : ", authUser)
         if(authUser && auth.currentUser?.emailVerified) {
           setUser(
             {
