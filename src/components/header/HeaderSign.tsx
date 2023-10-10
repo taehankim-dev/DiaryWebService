@@ -20,10 +20,11 @@ const HeaderSign : React.FC = () => {
 
   // 로그인 변화 감지.
   useEffect(() => {
-    const unsubscribe = () => {
+    // const unsubscribe = () => {
       setLoadingState(true);
       const auth = getAuth();
       authService.onAuthStateChanged((authUser) => {
+        console.log("authUser", authUser);
         if(authUser && auth.currentUser?.emailVerified) {
           setUser(
             {
@@ -37,11 +38,11 @@ const HeaderSign : React.FC = () => {
         }
       });
       setLoadingState(false);
-    }
+    // }
     
-    return () => {
-      unsubscribe();
-    }
+    // return () => {
+    //   unsubscribe();
+    // }
   }, [setLogin, setUser, setLoadingState])
 
   useEffect(() => {
