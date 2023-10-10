@@ -20,34 +20,22 @@ const HeaderSign : React.FC = () => {
 
   // 로그인 변화 감지.
   useEffect(() => {
-    // const unsubscribe = () => {
-      setLoadingState(true);
-      const auth = getAuth();
-      authService.onAuthStateChanged((authUser) => {
-        console.log("authUser", authUser);
-        if(authUser && auth.currentUser?.emailVerified) {
-          setUser(
-            {
-              uid: authUser.uid,
-              email: authUser.email !== null ? authUser.email : "",
-              displayName: authUser.displayName !== null ? authUser.displayName : ""
-            }
-          )
-  
-          setLogin(true);
-        }
-      });
-      setLoadingState(false);
-    // }
-    
-    // return () => {
-    //   unsubscribe();
-    // }
+    setLoadingState(true);
+    const auth = getAuth();
+    authService.onAuthStateChanged((authUser) => {
+      if(authUser && auth.currentUser?.emailVerified) {
+        setUser(
+          {
+            uid: authUser.uid,
+            email: authUser.email !== null ? authUser.email : "",
+            displayName: authUser.displayName !== null ? authUser.displayName : ""
+          }
+        )
+        setLogin(true);
+      }
+    });
+    setLoadingState(false);
   }, [setLogin, setUser, setLoadingState])
-
-  useEffect(() => {
-
-  }, [])
 
   // 로그아웃 버튼 클릭.
   const clickSignOut = useCallback(async() => {
