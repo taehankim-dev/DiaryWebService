@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "tsc && vite build",
-    "deploy" : "gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/css": "^11.11.2",
@@ -19,6 +19,7 @@
     "@types/lodash": "^4.14.198",
     "date-fns": "^2.30.0",
     "firebase": "^10.1.0",
+    "firebase-tools": "^12.6.2",
     "gh-pages": "^6.0.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
