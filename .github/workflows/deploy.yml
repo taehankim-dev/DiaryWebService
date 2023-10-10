@@ -79,14 +79,14 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "VITE_PUBLIC_URL=DiaryWebService" >> .env
-          echo "VITE_FIREBASE_API_KEY=AIzaSyCfSF1qD4BnY2shTbBq5v8L86jUGEkGxCc" >> .env
-          echo "VITE_FIREBASE_AUTH_DOMAIN=dailynote-41bd8.firebaseapp.com" >> .env
-          echo "VITE_FIREBASE_PROJECT_ID=dailynote-41bd8" >> .env
-          echo "VITE_FIREBASE_STORAGE_BUCKET=dailynote-41bd8.appspot.com" >> .env
-          echo "VITE_FIREBASE_MESSAGING_SENDER_ID=209562952214" >> .env
-          echo "VITE_FIREBASE_APP_ID=1:209562952214:web:e0221da7030e24ea838b37" >> .env
-          echo "VITE_FIREBASE_MEASUREMENT_ID=G-R5VFXQLY4W" >> .env
+          echo "VITE_PUBLIC_URL = ${{ secrets.VITE_PUBLIC_URL }}" >> .env
+          echo "VITE_FIREBASE_API_KEY = ${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env
+          echo "VITE_FIREBASE_AUTH_DOMAIN = ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" >> .env
+          echo "VITE_FIREBASE_PROJECT_ID = ${{ secrets.VITE_FIREBASE_PROJECT_ID }}" >> .env
+          echo "VITE_FIREBASE_STORAGE_BUCKET = ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}" >> .env
+          echo "VITE_FIREBASE_MESSAGING_SENDER_ID = ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}" >> .env
+          echo "VITE_FIREBASE_APP_ID = ${{ secrets.VITE_FIREBASE_APP_ID }}" >> .env
+          echo "VITE_FIREBASE_MEASUREMENT_ID = ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}" >> .env
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
