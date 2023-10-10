@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { authService, getAuth } from '@fb';
@@ -17,30 +17,35 @@ const HeaderSign : React.FC = () => {
   const setLoadingState = useSetRecoilState(isLoadingState);
   const [user, setUser] = useRecoilState(userInfo);
   const [login, setLogin] = useRecoilState(isLoginState);
-  const [loading, setLoading] = useState(true);
 
   // 로그인 상태 유지를 위함.
   useEffect(() => {
     setLoadingState(true);
 
     const unsubscribe = () => {
-      const auth = getAuth();
-      authService.onAuthStateChanged((authUser) => {
-        if(authUser && auth.currentUser?.emailVerified) {
-          setUser(
-            {
-              uid: authUser.uid,
-              email: authUser.email !== null ? authUser.email : "",
-              displayName: authUser.displayName !== null ? authUser.displayName : ""
-            }
-          )
-  
-          setLogin(true);
-        }
-  
-        setLoading(false);
+      try{
+        const auth = getAuth();
+        authService.onAuthStateChanged((authUser) => {
+          if(authUser && auth.currentUser?.emailVerified) {
+            setUser(
+              {
+                uid: authUser.uid,
+                email: authUser.email !== null ? authUser.email : "",
+                displayName: authUser.displayName !== null ? authUser.displayName : ""
+              }
+            )
+    
+            setLogin(true);
+          }
+    
+          setLoadingState(false);
+        });
+      } catch(err) {
+        console.log("HeaderSign, unsubscribe Error :", err);
+      } finally {
         setLoadingState(false);
-      });  
+      }
+        
     }
     
 
@@ -66,10 +71,6 @@ const HeaderSign : React.FC = () => {
   const goMyPage = useCallback(() => {
     navigate("/mypage")
   }, [navigate])
-
-  if(loading) {
-    return null;
-  }
   
   return(
     <>
