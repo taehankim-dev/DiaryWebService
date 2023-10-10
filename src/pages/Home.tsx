@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { isLoginState } from '@states/UserState';
 import Header from '@components/header/Header';
@@ -8,10 +8,6 @@ import Menu from '@components/menu/Menu';
 
 const Home : React.FC = () => {
   const isLogIn = useRecoilValue(isLoginState);
-
-  useEffect(() => {
-    console.log(isLogIn)
-  }, [isLogIn])
 
   return (
     <>

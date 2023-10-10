@@ -20,10 +20,9 @@ const HeaderSign : React.FC = () => {
 
   // 로그인 상태 유지를 위함.
   useEffect(() => {
-    setLoadingState(true);
-
     const unsubscribe = () => {
       try{
+        setLoadingState(true);
         const auth = getAuth();
         authService.onAuthStateChanged((authUser) => {
           if(authUser && auth.currentUser?.emailVerified) {
@@ -37,9 +36,8 @@ const HeaderSign : React.FC = () => {
     
             setLogin(true);
           }
-    
-          setLoadingState(false);
         });
+        setLoadingState(false);
       } catch(err) {
         console.log("HeaderSign, unsubscribe Error :", err);
       } finally {
