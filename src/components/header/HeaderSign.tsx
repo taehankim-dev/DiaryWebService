@@ -18,39 +18,36 @@ const HeaderSign : React.FC = () => {
   const [user, setUser] = useRecoilState(userInfo);
   const [login, setLogin] = useRecoilState(isLoginState);
 
-  // 로그인 상태 유지를 위함.
+  // 로그인 변화 감지.
   useEffect(() => {
     const unsubscribe = () => {
-      console.log("응?")
-      try{
-        setLoadingState(true);
-        const auth = getAuth();
-        authService.onAuthStateChanged((authUser) => {
-          console.log("authUser : ", authUser)
-          if(authUser && auth.currentUser?.emailVerified) {
-            setUser(
-              {
-                uid: authUser.uid,
-                email: authUser.email !== null ? authUser.email : "",
-                displayName: authUser.displayName !== null ? authUser.displayName : ""
-              }
-            )
-    
-            setLogin(true);
-          }
-        });
-        setLoadingState(false);
-      } catch(err) {
-        console.log("HeaderSign, unsubscribe Error :", err);
-      } finally {
-        setLoadingState(false);
-      }
+      setLoadingState(true);
+      const auth = getAuth();
+      authService.onAuthStateChanged((authUser) => {
+        console.log("authUser : ", authUser)
+        if(authUser && auth.currentUser?.emailVerified) {
+          setUser(
+            {
+              uid: authUser.uid,
+              email: authUser.email !== null ? authUser.email : "",
+              displayName: authUser.displayName !== null ? authUser.displayName : ""
+            }
+          )
+  
+          setLogin(true);
+        }
+      });
+      setLoadingState(false);
     }
     
     return () => {
       unsubscribe();
     }
   }, [setLogin, setUser, setLoadingState])
+
+  useEffect(() => {
+
+  }, [])
 
   // 로그아웃 버튼 클릭.
   const clickSignOut = useCallback(async() => {

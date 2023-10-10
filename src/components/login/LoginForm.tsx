@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPasswordService } from "@fb";
+import { browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPasswordService } from "@fb";
 import { useCheckLogin } from "@hooks/useCheckLogin";
 import { isLoginState, userInfo } from "@states/UserState";
 import { LoginPopupState } from "@states/PopupState";
@@ -43,7 +43,7 @@ export const LoginForm : React.FC<PropsI> = ({
         )
         
         // 로그인 유지를 위해 session에 저장.
-        setPersistence(auth, browserSessionPersistence)
+        setPersistence(auth, browserLocalPersistence)
         .then(() => {
           return signInWithEmailAndPasswordService(auth, userId, userPw);
         }).catch((error) => {
