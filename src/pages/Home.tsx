@@ -12,10 +12,14 @@ const Home : React.FC = () => {
   const isLogIn = useRecoilValue(isLoginState);
   const loading = useRecoilValue(isLoadingState);
   console.log(loading);
-
+  
   useEffect(() => {
     console.log(loading)
   }, [loading])
+
+  useEffect(() => {
+    console.log(isLogIn)
+  }, [isLogIn])
 
   return (
     <>

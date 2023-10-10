@@ -45,10 +45,8 @@ const HeaderSign : React.FC = () => {
       } finally {
         setLoadingState(false);
       }
-        
     }
     
-
     return () => {
       unsubscribe();
     }
