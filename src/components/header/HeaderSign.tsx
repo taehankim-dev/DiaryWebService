@@ -21,6 +21,7 @@ const HeaderSign : React.FC = () => {
   // 로그인 상태 유지를 위함.
   useEffect(() => {
     const unsubscribe = () => {
+      console.log("응?")
       try{
         setLoadingState(true);
         const auth = getAuth();
