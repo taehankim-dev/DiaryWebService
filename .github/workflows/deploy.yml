@@ -1,52 +1,3 @@
-# name: Build and Deploy
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#     - name: Checkout Repository
-#       uses: actions/checkout@v3
-
-#     - name: Set up Node.js
-#       uses: actions/setup-node@v3
-#       with:
-#         node-version: 18
-
-#     - name: Install Dependencies
-#       run: yarn install
-
-#     - name: Build Vite App
-#       run: yarn build
-
-#     - name: Set Environment Variables
-#       run: |
-#         echo "VITE_PUBLIC_URL=DiaryWebService" >> .env
-#         echo "VITE_FIREBASE_API_KEY=AIzaSyCfSF1qD4BnY2shTbBq5v8L86jUGEkGxCc" >> .env
-#         echo "VITE_FIREBASE_AUTH_DOMAIN=dailynote-41bd8.firebaseapp.com" >> .env
-#         echo "VITE_FIREBASE_PROJECT_ID=dailynote-41bd8" >> .env
-#         echo "VITE_FIREBASE_STORAGE_BUCKET=dailynote-41bd8.appspot.com" >> .env
-#         echo "VITE_FIREBASE_MESSAGING_SENDER_ID=209562952214" >> .env
-#         echo "VITE_FIREBASE_APP_ID=1:209562952214:web:e0221da7030e24ea838b37" >> .env
-#         echo "VITE_FIREBASE_MEASUREMENT_ID=G-R5VFXQLY4W" >> .env
-
-# - name: Deploy to GitHub Pages
-#         env:
-#           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-#         run: |
-#           git config --global user.email "goldmini95@gmail.com"
-#           git config --global user.name "taehankim-dev"
-
-#           git checkout -b gh-pages
-#           git add -f dist
-#           git commit -m "Deploy Vite App to GitHub Pages"
-#           git push -f "https://${GH_TOKEN}@github.com/taehankim-dev/DiaryWebService.git" gh-pages:gh-pages
-
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
@@ -74,7 +25,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -87,10 +38,16 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build Vite App
-        run: yarn build
-
       - name: Set Environment Variables
+        env: 
+          VITE_PUBLIC_URL : ${{ secrets.DiaryWebService }}
+          VITE_FIREBASE_API_KEY : ${{ secrets.AIzaSyCfSF1qD4BnY2shTbBq5v8L86jUGEkGxCc }}
+          VITE_FIREBASE_AUTH_DOMAIN : ${{ secrets.dailynote-41bd8.firebaseapp.com }}
+          VITE_FIREBASE_PROJECT_ID : ${{ secrets.dailynote-41bd8 }}
+          VITE_FIREBASE_STORAGE_BUCKET : ${{ secrets.dailynote-41bd8.appspot.com }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID : ${{ secrets.209562952214 }}
+          VITE_FIREBASE_APP_ID : ${{ secrets.1:209562952214:web:e0221da7030e24ea838b37 }}
+          VITE_FIREBASE_MEASUREMENT_ID : ${{ secrets.G-R5VFXQLY4W }}
         run: |
           echo "VITE_PUBLIC_URL=DiaryWebService" >> .env
           echo "VITE_FIREBASE_API_KEY=AIzaSyCfSF1qD4BnY2shTbBq5v8L86jUGEkGxCc" >> .env
@@ -100,6 +57,9 @@ jobs:
           echo "VITE_FIREBASE_MESSAGING_SENDER_ID=209562952214" >> .env
           echo "VITE_FIREBASE_APP_ID=1:209562952214:web:e0221da7030e24ea838b37" >> .env
           echo "VITE_FIREBASE_MEASUREMENT_ID=G-R5VFXQLY4W" >> .env
+
+      - name: Build Vite App
+        run: yarn build
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
