@@ -24,7 +24,7 @@
 ## 기술 스택
 * Vite
 * React
-* Styled Component
+* Emotion
 * Firebase
 * Typescript
 * Recoil
