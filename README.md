@@ -146,5 +146,5 @@
 > 3. 다른 사람에게 일정 공유 기능.
 
 ## 테스트용 이메일과 비밀번호
-> Email : goldmini95@naver.com
-> Password : 1234567
+> * Email : goldmini95@naver.com
+> * Password : 1234567
