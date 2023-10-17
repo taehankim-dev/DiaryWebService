@@ -138,7 +138,8 @@
 * https://taehankim-dev.github.io/DiaryWebService/
 
 ## 프로젝트 관련 블로그 주소
-* 현재 작성 중.
+* https://daily-dev-note95.tistory.com/89
+* 프로젝트를 진행하면서 사용했던 기술 스택을 사용한 이유와 프로젝트를 진행하며 느낀 생각들을 정리한 블로그입니다.
 
 ## 추가해보고 싶은 사항.
 > 1. 일정에 대한 기간 지정 기능.
