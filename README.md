@@ -90,6 +90,10 @@
  ┃ ┃ ┃ ┃ ┃ ┣ 📜ChangeNewPw.tsx
  ┃ ┃ ┃ ┃ ┃ ┣ 📜ChangePassword.tsx
  ┃ ┃ ┃ ┃ ┃ ┗ 📜ChangePasswordItem.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂deleteUser             // 회원탈퇴
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DeleteUser.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DeleteUserItem.tsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DeleteUserPw.tsx
  ┃ ┃ ┃ ┃ ┣ 📜MyPage.tsx
  ┃ ┃ ┃ ┃ ┗ 📜MyPageMyInfo.tsx
  ┃ ┃ ┣ 📂nonMembers                 // 비회원 사용자들이 보게 될 화면.
