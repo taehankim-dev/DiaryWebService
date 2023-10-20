@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { getAuth, createUserWithEmailAndPassword, updateProfileService, sendEmailVerification } from '@fb';
+import { getAuth, createUserWithEmailAndPassword, updateProfileService, sendEmailVerification, signInWithEmailAndPasswordService } from '@fb';
 import { useCheckLogin } from '@hooks/useCheckLogin';
 import { SignUpPopupState } from '@states/PopupState';
 import { PopupButton, PopupForm, PopupInput, PopupInputWrap, PopupLabel } from "@styles/PopupStyle"
@@ -16,9 +16,10 @@ export const SignUpForm : React.FC<PropsI> = ({
   const [userId, setUserId] = useState<string>(""); // user ID
   const [userPw, setUserPw] = useState<string>(""); // user password
   const [userName, setUserName] = useState<string>("");
+  const [isVerified, setIsVerified] = useState<boolean>(false);
   const {message, loginCheck} = useCheckLogin(userId);
 
-  // 회원가입
+  // 이메일 인증과 회원가입
   const PopupSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(!loginCheck){
@@ -36,27 +37,42 @@ export const SignUpForm : React.FC<PropsI> = ({
       return;
     }
 
-    try{
+    const auth = getAuth();
+
+    // 처음 입력시 이메일 인증 부분.
+    if(!isVerified){
       setIsLoading(true);
-      const auth = getAuth();
       await createUserWithEmailAndPassword(auth, userId, userPw);
 
       if(auth.currentUser) {
-        await sendEmailVerification(auth.currentUser)
         await updateProfileService(auth.currentUser, {displayName : userName});
+        await sendEmailVerification(auth.currentUser);
+        alert("입력하신 이메일로 인증 확인 메일을 보냈습니다. 확인해주세요!");
+        setIsVerified(true);
       }
 
-      alert("회원가입이 완료되었습니다. 입력하신 이메일로 인증 후, 로그인 해주세요.");
-      setSignUpActive(false);
-    } catch (error) {
-      const { code } = error as unknown as {code : string, message : string};
-      if(code === 'auth/email-already-in-use'){
-        alert("이미 등록된 사용자입니다.")
-      } else {
-        alert("회원가입 오류!!")
-      }
-    } finally {
       setIsLoading(false);
+    } else {
+      // 이메일 인증 메일을 보낸 후,
+      setIsLoading(true);
+      try{
+        const { user } = await signInWithEmailAndPasswordService(auth, userId, userPw);
+        if(user.emailVerified){
+          alert("회원가입이 완료되었습니다!");
+          setSignUpActive(false);
+        } else {
+          alert("이메일 인증 후 회원가입이 가능합니다. 이메일을 확인해주세요.");
+        }
+      } catch (error) {
+        const { code } = error as unknown as {code : string, message : string};
+        if(code === 'auth/email-already-in-use'){
+          alert("이미 등록된 사용자입니다.")
+        } else {
+          alert("회원가입 오류!!")
+        }
+      } finally {
+        setIsLoading(false);
+      }
     }
   }
 
@@ -84,6 +100,7 @@ export const SignUpForm : React.FC<PropsI> = ({
                               value={userId}
                               placeholder='이메일을 입력해주세요.'
                               onChange={onChangeUserId}/>
+        
       </PopupInputWrap>
       <PopupInputWrap>
         <PopupLabel>비밀번호</PopupLabel>
@@ -101,7 +118,13 @@ export const SignUpForm : React.FC<PropsI> = ({
                                 placeholder='사용하실 닉네임을 적어주세요.'
                                 onChange={onChangeUserName}/>
       </PopupInputWrap>
-      <PopupButton value="회원가입" type="submit"/>
+      {!isVerified
+        ?
+        <PopupButton value="이메일 인증" type='submit'/>
+        :
+        <PopupButton value="회원가입" type="submit"/>
+      }
+      
     </PopupForm>
   )
 }
