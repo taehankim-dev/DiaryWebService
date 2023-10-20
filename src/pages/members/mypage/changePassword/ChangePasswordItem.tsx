@@ -26,11 +26,11 @@ const RenderBtnItem = React.memo<RenderBtnItemI>((
   return (
     <MyPageChangePwArea>
       <li>
-        <button className="change-pw-btn changePwBtn"
+        <button className="change-pw-btn changePwBtn my-page-button"
                 onClick={onClickCancel}>
             <span>취소</span>
         </button>
-        <button className="change-pw-btn changePwBtn"
+        <button className="change-pw-btn changePwBtn my-page-button"
                 onClick={onClickNewPw}>
           <span>변경하기</span>
         </button>
@@ -128,7 +128,7 @@ export const ChangePasswordItem : React.FC<Props> = ({
 
   return (
     <>
-      <div className="my-page-newPw-title">비밀번호 변경</div>
+      <div className="my-page-subTitle">비밀번호 변경</div>
       <RenderCurPwItem curPw={curPw} setCurPw={setCurPw}/>
       <RendernewPwItem newPw={newPw} setNewPw={setNewPw}/>
       <RenderChknewPwItem chknewPw={chkNewPw} setChkNewPw={setChkNewPw}/>

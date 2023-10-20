@@ -76,6 +76,7 @@ export const PopupBodyTitle = styled.p`
 `
 
 export const PopupInputWrap = styled.div`
+  position: relative;  
   margin:15px auto;
   @media screen and (max-width:500px){
     width:90%;

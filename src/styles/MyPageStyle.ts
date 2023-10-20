@@ -10,6 +10,21 @@ export const MyPageContainer = styled.div`
   box-sizing: border-box;
   font-family: 'omyu';
   background: #e8e8e8;
+  .my-page-button{
+    display: inline-block;
+    min-width: 44px;
+    padding: 2px 9px 3px;
+    border-radius: 4px;
+    border: 1px solid rgba(212,216,229, .5);
+    background-color: rgba(212,216,229,.25);
+    box-sizing: border-box;
+    text-align: center;
+    transition: all 0.2s;
+    &:hover{
+      cursor: pointer;
+      background-color: rgb(212,216,229);
+    }
+  }
 `
 
 export const MyPageSubItemBox = styled.div`
@@ -60,19 +75,6 @@ export const MyPageItemArea = styled.ul`
       }
       .list-item-modifyBtn{
         float:right;
-        display: inline-block;
-        min-width: 44px;
-        padding: 2px 9px 3px;
-        border-radius: 4px;
-        border: 1px solid rgba(212,216,229, .5);
-        background-color: rgba(212,216,229,.25);
-        box-sizing: border-box;
-        text-align: center;
-        transition: all 0.2s;
-        &:hover{
-          cursor: pointer;
-          background-color: rgb(212,216,229);
-        }
       }
 
 
@@ -80,9 +82,9 @@ export const MyPageItemArea = styled.ul`
   }
 `
 
-export const MyPageChangePwItemBox = styled.div`
+export const MyPageSubItemBoxWrap = styled.div`
   padding-bottom: 16px;
-  .change-pw-btn{
+  .mypage-sub-item-btn{
     display: flex;
     margin: auto;
     padding: 2px 9px 3px;
@@ -99,6 +101,16 @@ export const MyPageChangePwItemBox = styled.div`
   }
   .my-page-changePw-title{
     padding-bottom: 12px;
+  }
+  .mypage-sub-item-btn-red{
+    background: #ff0000;
+    >span{
+      color: white;
+    }
+    &:hover{
+      font-weight: bold;
+      background: #9d0000;
+    }
   }
 `
 
@@ -134,6 +146,48 @@ export const MyPageChangePwArea = styled.ul`
     }
     .changePwBtn{
       float: right;
+      margin:0px 4px;
+    }
+  }
+`
+
+export const MyPageTextBody = styled.div`
+  .my-page-body-title{
+    text-align: center;
+    font-size: 1.3rem;
+    border-bottom: 1px solid rgba(220,227,233, .8);
+    padding-bottom: 5px;
+  }
+  >div{
+    text-align: center;
+  }
+  .my-page-body-notice{
+    >p{
+      margin: 0;
+    }
+  }
+  .my-page-body-sub-notice{
+    >p{
+      text-decoration-line: underline;
+    }
+  }
+  .my-page-body-button-box{
+    margin-top: 20px;
+    >button{
+      margin: 0 4px;
+    }
+  }
+  .my-page-body-check-pw{
+    >ul{
+      display: flex;
+      margin: 6px 0 0 auto;
+      >li{
+        margin: auto;
+      }
+      label{
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
     }
   }
 `

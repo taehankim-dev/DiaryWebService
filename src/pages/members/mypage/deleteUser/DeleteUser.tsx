@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import { ChangePasswordItem } from './ChangePasswordItem';
 import { MyPageSubItem, MyPageSubItemBoxWrap } from '@styles/MyPageStyle';
+import DeleteUserItem from './DeleteUserItem';
 
-export const MyPageChangePw : React.FC = () => {
+export const MyPageDeleteUser : React.FC = () => {
   const [changeActive, setChangeActive] = useState<boolean>(false);
 
   return (
     <MyPageSubItem>
-      {!changeActive 
-        ? 
+      {!changeActive
+        ?
         <MyPageSubItemBoxWrap>
-          <button className="mypage-sub-item-btn" onClick={() => {setChangeActive(true)}}>
-            <span>비밀번호 변경하기</span>
+          <button className="mypage-sub-item-btn mypage-sub-item-btn-red"
+                  onClick={() => setChangeActive(true)}>
+            <span>회원 탈퇴</span>
           </button>
         </MyPageSubItemBoxWrap>
         :
         <MyPageSubItemBoxWrap>
-          <ChangePasswordItem  setChangeActive={setChangeActive}/>
+          <DeleteUserItem setChangeAcitve={setChangeActive}/>
         </MyPageSubItemBoxWrap>
-        
       }
+      
     </MyPageSubItem>
   )
 }

@@ -25,7 +25,7 @@ const InitNameItem = React.memo<initNameItemI>((
       <span className="list-item-text">
         {displayName}
       </span>
-      <button className="list-item-modifyBtn"
+      <button className="list-item-modifyBtn my-page-button"
               onClick={() => {setChangeActive(true)}}>
         수정
       </button>

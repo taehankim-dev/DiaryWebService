@@ -11,6 +11,7 @@ import {
   reauthenticateWithCredential,
   updatePassword,
   sendPasswordResetEmail,
+  deleteUser
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -58,7 +59,8 @@ export {
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  deleteUser
 }
 
 export {

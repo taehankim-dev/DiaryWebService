@@ -17,6 +17,7 @@ const SignUpPopupState = atom({
   default: false,
 })
 
+// 비밀번호 찾기 팝업
 const FindPasswordPopupState = atom({
   key: "findPasswordPopupState",
   default: false,
